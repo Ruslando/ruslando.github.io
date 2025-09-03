@@ -21,22 +21,22 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'Your Name - Software Developer & Researcher',
-  description: 'Personal portfolio showcasing research publications, projects, and professional experience in software development and research.',
-  keywords: 'software developer, researcher, portfolio, publications, projects',
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
+  title: 'Ruslan Novikov - M.Sc. Graduate & Full-Stack Developer',
+  description: 'Personal portfolio showcasing research publications, projects, and professional experience in software development and computer graphics.',
+  keywords: 'software developer, researcher, portfolio, projects, backend development, computer graphics, full-stack developer',
+  authors: [{ name: 'Ruslan Novikov' }],
+  creator: 'Ruslan Novikov',
   openGraph: {
-    title: 'Your Name - Software Developer & Researcher',
-    description: 'Personal portfolio showcasing research publications, projects, and professional experience.',
+    title: 'Ruslan Novikov - M.Sc. Graduate & Full-Stack Developer',
+    description: 'Personal portfolio showcasing research publications, projects, and professional experience in software development and computer graphics.',
     url: 'https://ruslando.github.io',
-    siteName: 'Your Name Portfolio',
+    siteName: 'Ruslan Novikov Portfolio',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Your Name - Software Developer & Researcher',
-    description: 'Personal portfolio showcasing research publications, projects, and professional experience.',
+    title: 'Ruslan Novikov - M.Sc. Graduate & Full-Stack Developer',
+    description: 'Personal portfolio showcasing research publications, projects, and professional experience in software development and computer graphics.',
   },
 }
 

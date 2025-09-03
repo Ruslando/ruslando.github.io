@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { projectsData } from '../../data/projects'
+import { marked } from 'marked'
 
 export async function generateStaticParams() {
   return Object.keys(projectsData).map((id) => ({
@@ -56,13 +57,15 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
 
         {/* Project Header */}
         <header className="mb-12 pb-8 border-b border-gray-200">
-          <h1 className="text-3xl font-light mb-4 text-gray-900 leading-tight">
+          <h1 className="text-3xl font-light mb-3 text-gray-900 leading-tight">
             {project.title}
           </h1>
           
-          <p className="text-gray-600 mb-4">
-            <span className="font-medium">Year:</span> {project.year}
-          </p>
+          {project.subtitle && (
+            <p className="text-lg text-gray-600 mb-6 font-light">
+              {project.subtitle}
+            </p>
+          )}
 
           {/* Technologies */}
           <div className="mb-6">
@@ -79,28 +82,18 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
             </div>
           </div>
 
-          {/* Links */}
-          <div className="flex gap-4">
-            {Object.entries(project.links).map(([type, url]) => (
-              <a 
-                key={type}
-                href={url}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-200 text-sm font-medium capitalize shadow-sm"
-              >
-                <span>{type === 'github' ? '💻' : type === 'demo' ? '🚀' : type === 'docs' ? '📚' : '🔗'}</span>
-                <span>{type}</span>
-              </a>
-            ))}
-          </div>
         </header>
 
         {/* Full Description */}
         <section className="mb-12">
           <h2 className="text-xl font-medium mb-4 text-gray-800">Project Overview</h2>
-          <div className="prose prose-gray max-w-none">
-            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {project.description}
-            </div>
+          <div className="prose prose-gray max-w-none prose-headings:text-gray-800 prose-headings:font-medium prose-h2:text-lg prose-h3:text-base prose-p:text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-ul:text-gray-700 prose-li:text-gray-700">
+            <div 
+              className="markdown-content"
+              dangerouslySetInnerHTML={{ 
+                __html: marked(project.description) 
+              }}
+            />
           </div>
         </section>
 
