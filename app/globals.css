@@ -1,0 +1,132 @@
+@import "tailwindcss" source("../app/**/*.{js,ts,jsx,tsx}");
+
+/* Tailwind CSS v4 - CSS-first configuration */
+@theme {
+  --font-family-inter: var(--font-inter);
+  --font-family-crimson: var(--font-crimson);
+  --font-family-jetbrains-mono: var(--font-jetbrains-mono);
+  --font-family-sans: var(--font-inter), 'system-ui', 'sans-serif';
+  --font-family-serif: var(--font-crimson), 'Georgia', 'serif';
+  --font-family-mono: var(--font-jetbrains-mono), 'Consolas', 'Monaco', monospace;
+  
+  --color-gray-25: #fcfcfc;
+  --color-gray-50: #f8fafc;
+  --color-gray-75: #f1f5f9;
+  --color-gray-100: #e2e8f0;
+  --color-gray-200: #cbd5e1;
+  --color-gray-300: #94a3b8;
+  --color-gray-400: #64748b;
+  --color-gray-500: #475569;
+  --color-gray-600: #334155;
+  --color-gray-700: #1e293b;
+  --color-gray-800: #0f172a;
+  --color-gray-900: #020617;
+  
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+}
+
+/* Custom styles for modern academic aesthetic */
+@layer base {
+  html {
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'pnum' 1, 'tnum' 0, 'onum' 0, 'lnum' 1, 'dlig' 0;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: var(--font-family-sans);
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-gray-25);
+    color: var(--color-gray-800);
+  }
+
+  h1 {
+    font-family: var(--font-family-serif);
+    font-weight: 600;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'dlig' 1;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  code, pre {
+    font-family: var(--font-family-mono);
+    font-feature-settings: 'kern' 0, 'liga' 0, 'calt' 0;
+  }
+
+  /* Modern focus styles */
+  *:focus-visible {
+    outline: 2px solid var(--color-blue-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .border-l-3 {
+    border-left-width: 3px;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+}
+
+/* Print styles for academic formatting */
+@media print {
+  body { 
+    font-size: 12pt; 
+    line-height: 1.6;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+  
+  h1, h2, h3 {
+    break-after: avoid;
+  }
+  
+  article {
+    break-inside: avoid;
+  }
+}
