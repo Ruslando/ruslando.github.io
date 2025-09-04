@@ -86,15 +86,12 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
 
         {/* Full Description */}
         <section className="mb-12">
-          <h2 className="text-xl font-medium mb-4 text-gray-800">Project Overview</h2>
-          <div className="prose prose-gray max-w-none prose-headings:text-gray-800 prose-headings:font-medium prose-h2:text-lg prose-h3:text-base prose-p:text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-ul:text-gray-700 prose-li:text-gray-700">
-            <div 
-              className="markdown-content"
-              dangerouslySetInnerHTML={{ 
-                __html: marked(project.description) 
-              }}
-            />
-          </div>
+          <div 
+            className="markdown-content text-gray-700 leading-relaxed"
+            dangerouslySetInnerHTML={{ 
+              __html: marked(project.description) 
+            }}
+          />
         </section>
 
         {/* Features (if extracted) */}
