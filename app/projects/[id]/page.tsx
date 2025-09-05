@@ -69,9 +69,9 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
 
           {/* Technologies */}
           <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Technologies Used:</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Keywords:</h3>
             <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
+              {project.keywords.map((tech) => (
                 <span 
                   key={tech}
                   className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded"

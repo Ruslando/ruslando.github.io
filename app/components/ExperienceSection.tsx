@@ -4,25 +4,54 @@ import { ContentCard } from './ui/ContentCard'
 export default function ExperienceSection() {
   const experiences = [
     {
-      title: 'Your Job Title',
-      company: 'Company Name',
-      period: '2023 - Present',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Brief description of your role and responsibilities.',
+      title: 'Student Research Assistant – Software Development',
+      company: 'Fraunhofer-Institut für Produktionsanlagen und Konstruktionstechnik',
+      period: '10.2021 – Current',
+      location: 'Berlin, Germany',
+      description: '',
       achievements: [
-        'Key achievement or responsibility',
-        'Another important contribution',
-        'Technical leadership or innovation'
+        'Developed a Progressive Web App for data flow modeling using Vue.js, .NET Entity Framework, and MS SQL Server',
+        'Implemented real-time collaboration features with Automerge CRDT technology',
+        'Designed a domain-specific OWL ontology for semantic company data representation',
+        'Built a RESTful API with Java Spring Boot for ontology management'
+      ]
+    }
+  ]
+
+  const education = [
+    {
+      title: 'Master of Science - International Media and Computing',
+      company: 'Hochschule für Technik und Wirtschaft Berlin',
+      period: '10.2022 – 05.2025',
+      location: 'Berlin, Germany',
+      description: 'Advanced studies in media technology with specialization in interactive systems and web technologies.',
+      achievements: [
+        'Specialization: Game Technology & Interactive Systems and Web Technology',
+        'Master\'s Thesis: Research and evaluation of the use of Large Language Models and graph databases for the development of agentic systems in Unity, utilizing LangChain / LangGraph and Neo4j'
+      ]
+    },
+    {
+      title: 'Bachelor of Science - International Media and Computing',
+      company: 'Hochschule für Technik und Wirtschaft Berlin',
+      period: '04.2018 – 04.2022',
+      location: 'Berlin, Germany',
+      description: '',
+      achievements: [
+        'Specialization: Game Technology & Interactive Systems and Visual Computing',
+        'Bachelor\'s Thesis: Design and integration of a hardware-accelerated path tracing engine into an open-source video game, using Vulkan in the C programming language to enable real-time graphics rendering'
       ]
     }
   ]
 
   return (
     <div className="space-y-8">
-      <SectionHeader description="Professional experience, academic background, and career progression.">
+      <SectionHeader>
         Experience & Education
       </SectionHeader>
 
+      {/* Work Experience */}
       <div className="space-y-8">
+        <h3 className="text-xl font-medium mb-6 text-gray-800 pl-4">Work Experience</h3>
         {experiences.map((exp, index) => (
           <ContentCard
             key={index}
@@ -41,19 +70,18 @@ export default function ExperienceSection() {
       <div className="mt-12">
         <h3 className="text-xl font-medium mb-6 text-gray-800 pl-4">Education</h3>
         <div className="space-y-6">
-          <ContentCard
-            type="experience"
-            title="Your Degree"
-            company="University Name"
-            period="Year - Year"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            <div className="mt-2">
-              <p className="text-gray-600 text-sm">
-                Additional details or achievements
-              </p>
-            </div>
-          </ContentCard>
+          {education.map((edu, index) => (
+            <ContentCard
+              key={index}
+              type="experience"
+              title={edu.title}
+              company={edu.company}
+              period={edu.period}
+              achievements={edu.achievements}
+            >
+              {edu.description}
+            </ContentCard>
+          ))}
         </div>
       </div>
     </div>

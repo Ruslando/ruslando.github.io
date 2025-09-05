@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Image from 'next/image'
 import TabNavigation from './components/TabNavigation'
 import AboutSection from './components/AboutSection'
 import PublicationsSection from './components/PublicationsSection'
@@ -44,9 +45,11 @@ export default function Home() {
           {/* Mobile: Centered layout */}
           <div className="block md:hidden text-center">
             <div className="mb-8">
-              <img 
+              <Image 
                 src="/profile.jpg" 
                 alt="Ruslan Novikov"
+                width={112}
+                height={112}
                 className="w-28 h-28 rounded-full object-cover shadow-lg border-4 border-white ring-2 ring-gray-100 mx-auto mb-6"
               />
               <PageTitle subtitle="M.Sc. Graduate & Full-Stack Developer">Ruslan Novikov</PageTitle>
@@ -87,9 +90,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex-shrink-0">
-                <img 
+                <Image 
                   src="/profile.jpg" 
                   alt="Ruslan Novikov"
+                  width={144}
+                  height={144}
                   className="w-36 h-36 rounded-full object-cover shadow-lg border-4 border-white ring-2 ring-gray-100"
                 />
               </div>
