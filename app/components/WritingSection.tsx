@@ -1,8 +1,16 @@
 import { SectionHeader } from './ui/SectionHeader'
 import { ContentCard } from './ui/ContentCard'
 
+interface Writing {
+  title: string
+  date: string
+  type: string
+  description: string
+  link: string
+}
+
 export default function WritingSection() {
-  const writings = [
+  const writings: Writing[] = [
     // {
     //   title: 'Your Blog Post or Talk Title',
     //   date: 'Month Year',

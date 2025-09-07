@@ -7,12 +7,12 @@ interface CardProps {
 }
 
 export function Card({ children, variant = 'default', className = '' }: CardProps) {
-  const baseStyles = 'border bg-white rounded-xl p-6 transition-all duration-300'
+  const baseStyles = 'bg-white rounded-2xl p-6 transition-all duration-300 border border-gray-100'
   
   const variants = {
-    default: 'border-gray-200 hover:shadow-lg hover:border-gray-300 hover:bg-gray-50/30',
-    interactive: 'border-gray-200 hover:shadow-lg hover:border-gray-300 hover:bg-gray-50/30 cursor-pointer',
-    highlight: 'border-blue-200 hover:shadow-lg hover:border-blue-300 hover:bg-blue-50/30'
+    default: 'hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1',
+    interactive: 'hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 cursor-pointer',
+    highlight: 'border-blue-100 bg-blue-50/30 hover:shadow-xl hover:shadow-blue-200/50 hover:-translate-y-1'
   }
   
   return (

@@ -60,6 +60,7 @@ export default function ExperienceSection() {
             company={exp.company}
             period={exp.period}
             achievements={exp.achievements}
+            expandable={true}
           >
             {exp.description}
           </ContentCard>
@@ -78,6 +79,7 @@ export default function ExperienceSection() {
               company={edu.company}
               period={edu.period}
               achievements={edu.achievements}
+              expandable={true}
             >
               {edu.description}
             </ContentCard>

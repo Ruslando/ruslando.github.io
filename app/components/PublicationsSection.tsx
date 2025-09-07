@@ -1,10 +1,9 @@
-import { publicationsData } from '../data/publications'
-import { truncateText } from '../utils/textUtils'
+import { publicationsData, type Publication } from '../data/publications'
 import { SectionHeader } from './ui/SectionHeader'
 import { ContentCard } from './ui/ContentCard'
 
 export default function PublicationsSection() {
-  const publications = Object.values(publicationsData)
+  const publications: Publication[] = Object.values(publicationsData)
 
   return (
     <div className="space-y-8">
@@ -14,7 +13,7 @@ export default function PublicationsSection() {
 
       <div className="space-y-8">
         {publications.length > 0 ? (
-          publications.map((paper) => (
+          publications.map((paper: { id: string; title: string; year: string; authors: string; venue: string; abstract: string; links: Record<string, string> }) => (
             <div key={paper.id} className="space-y-3">
               <ContentCard
                 type="publication"
@@ -24,21 +23,26 @@ export default function PublicationsSection() {
                 venue={paper.venue}
                 interactive={true}
                 href={`/publications/${paper.id}`}
+                expandable={true}
               >
-                {truncateText(paper.abstract, 250)}
+                <div className="space-y-4">
+                  <div>{paper.abstract}</div>
+                  {/* External links inside the expandable content */}
+                  <div className="flex gap-4 text-sm">
+                    {Object.entries(paper.links).map(([type, url]) => (
+                      <a 
+                        key={type} 
+                        href={url as string} 
+                        className="text-blue-600 hover:underline capitalize"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {type}
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </ContentCard>
-              {/* External links outside the interactive card */}
-              <div className="flex gap-4 text-sm pl-6">
-                {Object.entries(paper.links).map(([type, url]) => (
-                  <a 
-                    key={type} 
-                    href={url} 
-                    className="text-blue-600 hover:underline capitalize"
-                  >
-                    {type}
-                  </a>
-                ))}
-              </div>
             </div>
           ))
         ) : (

@@ -1,5 +1,7 @@
+'use client'
+
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 
 interface ContentCardProps {
   title: string
@@ -14,6 +16,7 @@ interface ContentCardProps {
   company?: string
   period?: string
   achievements?: string[]
+  expandable?: boolean
   children: ReactNode
 }
 
@@ -30,8 +33,11 @@ export function ContentCard({
   company,
   period,
   achievements,
+  expandable = false,
   children
 }: ContentCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
+  
   const colorMap = {
     project: 'border-gray-200 hover:border-gray-300 hover:bg-gray-50/30',
     publication: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30',
@@ -68,6 +74,103 @@ export function ContentCard({
       )
     }
     return <span>{titleChildren}</span>
+  }
+
+  if (expandable) {
+    return (
+      <div className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]}`}>
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-full p-6 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
+        >
+          <div className="flex items-start justify-between w-full">
+            <div className="flex-1">
+              <h3 className="text-lg font-medium text-gray-900 leading-tight text-left">
+                {title}
+              </h3>
+              {company && type === 'experience' && (
+                <p className="text-gray-600 text-sm mt-1 text-left">{company}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-3 ml-4">
+              <span className="text-sm text-gray-500 whitespace-nowrap">
+                {date || year || period}
+              </span>
+              <svg
+                className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
+                  isExpanded ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        
+        <div className={`transition-all duration-300 overflow-hidden ${
+          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="px-6 pb-6">
+            {/* Metadata based on type */}
+            {authors && (
+              <p className="text-gray-600 mb-2 text-sm">
+                <span className="font-medium">Authors:</span> {authors}
+              </p>
+            )}
+            
+            {venue && (
+              <p className="text-gray-600 mb-2 text-sm">
+                <span className="font-medium">Venue:</span> {venue}
+              </p>
+            )}
+
+            {company && type !== 'experience' && (
+              <p className="text-gray-600 mb-2">{company}</p>
+            )}
+
+            {/* Tags for projects */}
+            {tags && tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {tags.map((tag) => (
+                  <span 
+                    key={tag}
+                    className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="text-gray-700 leading-relaxed mb-4">
+              {children}
+            </div>
+
+            {/* Achievements for experience */}
+            {achievements && achievements.length > 0 && (
+              <ul className="text-sm text-gray-600 space-y-1 mb-4">
+                {achievements.map((achievement, i) => (
+                  <li key={i}>• {achievement}</li>
+                ))}
+              </ul>
+            )}
+
+            {/* Show Details arrow for interactive cards */}
+            {interactive && href && (
+              <div className="flex gap-4 text-sm">
+                <Link href={href} className="text-blue-600 hover:underline">
+                  Details →
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
