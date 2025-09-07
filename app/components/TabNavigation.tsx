@@ -23,8 +23,15 @@ export default function TabNavigation({ tabs, defaultTab }: TabNavigationProps) 
     const tabFromUrl = searchParams.get('tab')
     if (tabFromUrl && tabs.some(tab => tab.id === tabFromUrl)) {
       setActiveTab(tabFromUrl)
+    } else if (!tabFromUrl && (defaultTab || tabs[0]?.id)) {
+      // Set URL parameter to match the default tab if no tab is specified
+      const defaultTabId = defaultTab || tabs[0]?.id
+      const params = new URLSearchParams(searchParams)
+      params.set('tab', defaultTabId)
+      router.replace(`/?${params.toString()}`, { scroll: false })
+      setActiveTab(defaultTabId)
     }
-  }, [searchParams, tabs])
+  }, [searchParams, tabs, defaultTab, router])
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId)
