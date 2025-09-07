@@ -21,33 +21,24 @@ export default function ProjectsSection() {
             title={project.title}
             year={project.year}
             tags={project.keywords}
-            interactive={true}
-            href={`/projects/${project.id}`}
+            interactive={project.id === 'quake-path-tracing'}
+            href={project.id === 'quake-path-tracing' ? `/projects/${project.id}` : undefined}
             expandable={true}
           >
             <div className="space-y-4">
               <div>{truncateText(project.description, 300)}</div>
               
-              {/* All links inside the expandable content */}
-              {Object.entries(project.links).length > 0 && (
+              {/* External links inside the expandable content (excluding PDF) */}
+              {Object.entries(project.links).filter(([type]) => type !== 'pdf').length > 0 && (
                 <div className="flex gap-4 text-sm">
-                  {Object.entries(project.links).map(([type, url]) => (
+                  {Object.entries(project.links).filter(([type]) => type !== 'pdf').map(([type, url]) => (
                     <a 
                       key={type} 
                       href={url as string}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                        type === 'pdf' 
-                          ? 'bg-blue-600 text-white hover:bg-blue-700'
-                          : 'text-blue-600 hover:underline'
-                      }`}
+                      className="text-blue-600 hover:underline"
                     >
-                      {type === 'pdf' && (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                      )}
                       {type.toUpperCase()}
                     </a>
                   ))}

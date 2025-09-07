@@ -39,10 +39,10 @@ export function ContentCard({
   const [isExpanded, setIsExpanded] = useState(false)
   
   const colorMap = {
-    project: 'border-gray-200 hover:border-gray-300 hover:bg-gray-50/30',
+    project: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30',
     publication: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30',
-    experience: 'border-green-200 hover:border-green-300 hover:bg-green-50/30',
-    writing: 'border-purple-200 hover:border-purple-300 hover:bg-purple-50/30'
+    experience: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30',
+    writing: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30'
   }
 
   const CardWrapper = ({ children: cardChildren }: { children: ReactNode }) => {
@@ -81,7 +81,7 @@ export function ContentCard({
       <div className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]}`}>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full p-6 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
+          className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors"
         >
           <div className="flex items-start justify-between w-full">
             <div className="flex-1">
@@ -159,8 +159,22 @@ export function ContentCard({
               </ul>
             )}
 
-            {/* Show Details arrow for interactive cards */}
-            {interactive && href && (
+            {/* Show Read More arrow for interactive cards or grayed out text */}
+            {type === 'project' && (
+              <div className="flex gap-4 text-sm">
+                {interactive && href ? (
+                  <Link href={href} className="text-blue-600 hover:underline">
+                    Read More →
+                  </Link>
+                ) : (
+                  <span className="text-gray-400 cursor-not-allowed">
+                    Read More →
+                  </span>
+                )}
+              </div>
+            )}
+            {/* Show Details arrow for non-project interactive cards */}
+            {type !== 'project' && interactive && href && (
               <div className="flex gap-4 text-sm">
                 <Link href={href} className="text-blue-600 hover:underline">
                   Details →
@@ -229,8 +243,22 @@ export function ContentCard({
         </ul>
       )}
 
-      {/* Show Details arrow for interactive cards */}
-      {interactive && href && (
+      {/* Show Read More arrow for interactive cards or grayed out text */}
+      {type === 'project' && (
+        <div className="flex gap-4 text-sm">
+          {interactive && href ? (
+            <span className="text-blue-600 hover:underline cursor-pointer">
+              Read More →
+            </span>
+          ) : (
+            <span className="text-gray-400 cursor-not-allowed">
+              Read More →
+            </span>
+          )}
+        </div>
+      )}
+      {/* Show Details arrow for non-project interactive cards */}
+      {type !== 'project' && interactive && href && (
         <div className="flex gap-4 text-sm">
           <span className="text-blue-600 hover:underline cursor-pointer">
             Details →

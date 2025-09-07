@@ -33,10 +33,10 @@ export default function TechnologiesSection() {
 
   const getExperienceLevelColor = (level: number) => {
     switch(level) {
-      case 1: return 'bg-yellow-100 text-yellow-700'
-      case 2: return 'bg-orange-100 text-orange-700'  
-      case 3: return 'bg-green-100 text-green-700'
-      default: return 'bg-gray-100 text-gray-700'
+      case 1: return 'bg-blue-100 text-blue-700'
+      case 2: return 'bg-blue-200 text-blue-800'  
+      case 3: return 'bg-blue-300 text-blue-900'
+      default: return 'bg-blue-100 text-blue-700'
     }
   }
 
@@ -49,26 +49,6 @@ export default function TechnologiesSection() {
     }
   }
 
-  const getLanguageColor = (language: string) => {
-    const colors: Record<string, string> = {
-      'C#': 'bg-purple-100 text-purple-700',
-      'HLSL': 'bg-pink-100 text-pink-700',
-      'Blueprint': 'bg-blue-100 text-blue-700',
-      'C++': 'bg-indigo-100 text-indigo-700',
-      'GDScript': 'bg-teal-100 text-teal-700',
-      'C': 'bg-green-100 text-green-700',
-      'SQL': 'bg-gray-100 text-gray-700',
-      'SPARQL': 'bg-gray-100 text-gray-700',
-      'Cypher': 'bg-gray-100 text-gray-700',
-      'Python': 'bg-blue-100 text-blue-700',
-      'JavaScript': 'bg-yellow-100 text-yellow-700',
-      'OWL': 'bg-orange-100 text-orange-700',
-      'RDF': 'bg-red-100 text-red-700',
-      'HTML': 'bg-orange-100 text-orange-700',
-      'CSS': 'bg-blue-100 text-blue-700'
-    }
-    return colors[language] || 'bg-gray-100 text-gray-700'
-  }
 
   const toggleCardExpansion = (cardId: string) => {
     setExpandedCards(prev => {
@@ -93,7 +73,7 @@ export default function TechnologiesSection() {
   const categoryInfo = {
     gamedev: {
       name: 'Game Development & Graphics',
-      color: 'bg-purple-50 border-purple-200',
+      color: 'bg-white border-blue-200',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -102,7 +82,7 @@ export default function TechnologiesSection() {
     },
     backend: {
       name: 'Backend & Databases',
-      color: 'bg-orange-50 border-orange-200',
+      color: 'bg-white border-blue-200',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
@@ -111,7 +91,7 @@ export default function TechnologiesSection() {
     },
     ai: {
       name: 'AI & Semantic Technologies',
-      color: 'bg-green-50 border-green-200',
+      color: 'bg-white border-blue-200',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -120,10 +100,10 @@ export default function TechnologiesSection() {
     },
     web: {
       name: 'Web Development',
-      color: 'bg-blue-50 border-blue-200',
+      color: 'bg-white border-blue-200',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       )
     }
@@ -135,7 +115,7 @@ export default function TechnologiesSection() {
         <SectionHeader>Technologies</SectionHeader>
         
         {/* Filter Controls */}
-        <div className="pl-4 mb-8">
+        {/* <div className="pl-4 mb-8">
           <div className="flex flex-wrap gap-3">
             <span className="text-sm font-medium text-gray-700">Filter by experience level:</span>
             {[1, 2, 3].map(level => (
@@ -158,7 +138,7 @@ export default function TechnologiesSection() {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Technologies Grid */}
         <div className="pl-4 space-y-6">
@@ -171,16 +151,21 @@ export default function TechnologiesSection() {
             return (
               <div 
                 key={category} 
-                className={`rounded-2xl border ${info.color} transition-all duration-300 overflow-hidden`}
+                className={`rounded-2xl border ${info.color} transition-all duration-300 hover:shadow-lg hover:border-blue-300 overflow-hidden`}
               >
                 {/* Card Header - Always Visible */}
                 <button
                   onClick={() => toggleCardExpansion(cardId)}
-                  className="w-full p-4 flex items-center justify-between hover:bg-white/50 transition-colors"
+                  className="w-full p-4 flex items-center justify-between hover:bg-blue-50/30 transition-colors"
                 >
-                  <h3 className="font-semibold text-gray-900">
-                    {info.name} ({techs.length})
-                  </h3>
+                  <div className="flex items-center gap-3">
+                    <div className="text-gray-600">
+                      {info.icon}
+                    </div>
+                    <h3 className="font-semibold text-gray-900">
+                      {info.name}
+                    </h3>
+                  </div>
                   <svg
                     className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
                       isExpanded ? 'rotate-180' : ''
@@ -200,7 +185,7 @@ export default function TechnologiesSection() {
                   <div className="px-4 pb-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {techs.map((tech) => (
-                        <div key={tech.name} className="bg-white/70 p-4 rounded-xl border border-white/50">
+                        <div key={tech.name} className="bg-blue-50/30 p-4 rounded-xl border border-blue-200 hover:bg-blue-100/50 transition-colors">
                           <div className="font-medium text-gray-800 mb-3 flex items-center justify-between">
                             {tech.name}
                             <span className={`px-2 py-1 text-xs rounded-full font-medium ${getExperienceLevelColor(tech.experienceLevel)}`}>
@@ -209,7 +194,7 @@ export default function TechnologiesSection() {
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {tech.languages.map((lang: string) => (
-                              <span key={lang} className={`px-3 py-1 text-xs rounded-full font-medium ${getLanguageColor(lang)}`}>
+                              <span key={lang} className="px-3 py-1 text-xs rounded-full font-medium bg-blue-100 text-blue-700">
                                 {lang}
                               </span>
                             ))}

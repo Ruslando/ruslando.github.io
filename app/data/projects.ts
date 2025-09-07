@@ -2,8 +2,8 @@ export const projectsData = {
   'masters-thesis': {
     id: 'masters-thesis',
     title: 'Master\'s Thesis: Research and Evaluation of Large Language Models and Graph Databases for Agentic Systems in Unity',
-    subtitle: 'Expected 2025',
-    year: 'Expected 2025',
+    subtitle: 'Thesis',
+    year: 'February 21, 2025',
     category: 'thesis',
     keywords: ['Unity', 'LangChain', 'LangGraph', 'Neo4j', 'LLM', 'AI Agents'],
     description: `This project page is currently under construction. Content will be available soon.`,
@@ -13,7 +13,7 @@ export const projectsData = {
   'quake-path-tracing': {
     id: 'quake-path-tracing',
     title: 'Bachelor Thesis: Implementing a Hardware-Accelerated Path Tracing Renderer in \'Quake\'',
-    subtitle: 'March 4, 2022',
+    subtitle: 'Thesis',
     year: 'March 4, 2022',
     category: 'thesis',
     keywords: ['Vulkan', 'C', 'GLSL', 'Path Tracing', 'NVIDIA RTX'],
@@ -62,22 +62,22 @@ The work demonstrates both the technical feasibility and practical limitations o
   },
   'coursework-project-1': {
     id: 'coursework-project-1',
-    title: 'Interactive Media Systems Project',
+    title: 'Modification of "Quake" with RTX Remix',
     subtitle: 'Academic Coursework',
-    year: '2023',
+    year: 'April 2024',
     category: 'coursework',
-    keywords: ['Vue.js', 'Node.js', 'Web Development'],
+    keywords: ['RTX Remix', 'Ray Tracing', 'Quake', 'NVIDIA'],
     description: `This project page is currently under construction. Content will be available soon.`,
     links: {
     }
   },
   'coursework-project-2': {
     id: 'coursework-project-2',
-    title: 'Game Development Coursework',
+    title: 'Simulation of Reprojection Techniques as Shader in Unity',
     subtitle: 'Academic Coursework',
-    year: '2022',
+    year: 'September 2023',
     category: 'coursework',
-    keywords: ['Unity', 'Game Development', 'C#'],
+    keywords: ['Unity', 'Shaders', 'Reprojection', 'Computer Graphics'],
     description: `This project page is currently under construction. Content will be available soon.`,
     links: {
     }

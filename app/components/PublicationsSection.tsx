@@ -1,4 +1,5 @@
 import { publicationsData, type Publication } from '../data/publications'
+import { truncateText } from '../utils/textUtils'
 import { SectionHeader } from './ui/SectionHeader'
 import { ContentCard } from './ui/ContentCard'
 
@@ -21,27 +22,11 @@ export default function PublicationsSection() {
                 year={paper.year}
                 authors={paper.authors}
                 venue={paper.venue}
-                interactive={true}
-                href={`/publications/${paper.id}`}
+                interactive={false}
+                href={undefined}
                 expandable={true}
               >
-                <div className="space-y-4">
-                  <div>{paper.abstract}</div>
-                  {/* External links inside the expandable content */}
-                  <div className="flex gap-4 text-sm">
-                    {Object.entries(paper.links).map(([type, url]) => (
-                      <a 
-                        key={type} 
-                        href={url as string} 
-                        className="text-blue-600 hover:underline capitalize"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {type}
-                      </a>
-                    ))}
-                  </div>
-                </div>
+                {truncateText(paper.abstract, 250)}
               </ContentCard>
             </div>
           ))
