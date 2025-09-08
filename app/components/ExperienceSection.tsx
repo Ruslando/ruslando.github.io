@@ -6,7 +6,7 @@ export default function ExperienceSection() {
     {
       title: 'Student Research Assistant – Software Development',
       company: 'Fraunhofer-Institut für Produktionsanlagen und Konstruktionstechnik',
-      period: '10.2021 – Current',
+      period: 'October 2021 – Current',
       location: 'Berlin, Germany',
       description: '',
       achievements: [
@@ -22,7 +22,7 @@ export default function ExperienceSection() {
     {
       title: 'Master of Science - International Media and Computing',
       company: 'Hochschule für Technik und Wirtschaft Berlin',
-      period: '10.2022 – 05.2025',
+      period: 'October 2022 – May 2025',
       location: 'Berlin, Germany',
       description: '',
       achievements: [
@@ -33,7 +33,7 @@ export default function ExperienceSection() {
     {
       title: 'Bachelor of Science - International Media and Computing',
       company: 'Hochschule für Technik und Wirtschaft Berlin',
-      period: '04.2018 – 04.2022',
+      period: 'April 2018 – April 2022',
       location: 'Berlin, Germany',
       description: '',
       achievements: [

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ReactNode, useState } from 'react'
+import { FaChevronDown } from 'react-icons/fa'
 
 interface ContentCardProps {
   title: string
@@ -83,8 +84,8 @@ export function ContentCard({
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors"
         >
-          <div className="flex items-start justify-between w-full">
-            <div className="flex-1">
+          <div className="flex items-start justify-between w-full min-w-0">
+            <div className="flex-1 min-w-0 mr-3">
               <h3 className="text-lg font-medium text-gray-900 leading-tight text-left">
                 {title}
               </h3>
@@ -92,20 +93,15 @@ export function ContentCard({
                 <p className="text-gray-600 text-sm mt-1 text-left">{company}</p>
               )}
             </div>
-            <div className="flex items-center gap-3 ml-4">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <span className="text-sm text-gray-500 whitespace-nowrap">
                 {date || year || period}
               </span>
-              <svg
-                className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
+              <FaChevronDown
+                className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transition-transform duration-300 flex-shrink-0 ${
                   isExpanded ? 'rotate-180' : ''
                 }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              />
             </div>
           </div>
         </button>
