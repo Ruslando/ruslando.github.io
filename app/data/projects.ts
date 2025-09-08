@@ -17,47 +17,72 @@ export const projectsData = {
     year: 'March 4, 2022',
     category: 'thesis',
     keywords: ['Vulkan', 'C', 'GLSL', 'Path Tracing', 'NVIDIA RTX'],
-    description: `During my studies, I attended a course called "Game Technologies and Interactive Systems: Current Topics," which dealt with the latest developments in the gaming industry. The trending topic at the time was Ray Tracing, triggered by the release of NVIDIA RTX cards and the resulting new lighting effects that were increasingly finding their way into games.
+    description: `# Implementing a Hardware-Accelerated Path Tracing Renderer in 'Quake'
 
-You can think what you want about this technology, but projects like Quake II RTX impressively demonstrate what stunning visual results can be achieved even in decades-old games. Besides the fact that light simulation delivers impressive results, the underlying mathematics and applied theories are even more fascinating than the results themselves. This course inspired me years later to dedicate my bachelor's thesis to this topic. The goal was to demonstrate and practically showcase the possibilities and restrictions of such a modification in existing games.
+During my studies, I attended a course called *Game Technologies and Interactive Systems: Current Topics*, which dealt with the latest developments in the gaming industry. The trending topic at the time was Ray Tracing, largely influenced by the release of NVIDIA RTX cards and the new lighting effects that slowly made their way into games.  
 
-## Technical Foundation and API Selection
+You can think what you want about this technology, but projects like *Quake II RTX* impressively showed what kind of visual results are possible even in decades-old titles. While the graphical side is striking, what fascinated me even more were the underlying mathematics and theories. Years later, this course became the spark that made me dedicate my bachelor’s thesis to this topic. My goal was to demonstrate and practically explore the possibilities and limitations of integrating such a rendering technique into an existing game.  
 
-After extensive research and comparison of various candidates (Half-Life, The Elder Scrolls III: Morrowind), I decided on the Quake source port "vkQuake" by Axel Gneitling. This Vulkan port not only met the technical requirements but also offered the advantage of an already existing modern API integration. As a direct predecessor to Quake II, the choice was even thematically fitting!
+---
 
-## The Major Architecture Problems
+## Technical Foundation and Game Choice
 
-The biggest challenge was converting the individual rasterization-based systems into a ray tracing system. Many of the period-appropriate systems were not suitable for this type of light simulation and led to significant problems.
+Similar to *Quake II RTX Remix*, I wanted to make use of the RT cores of NVIDIA’s RTX cards to accelerate ray tracing. At the time, both DirectX12 and Vulkan supported this, so the choice of API was open. More important was the choice of game: ideally something open source or at least modifiable, with access to the rendering code. A project that already used Vulkan or DirectX12 would also help, since porting a whole engine just for ray tracing was not the point of this thesis.  
 
-**The PVS Problem:** Quake's "Potentially Visible Set" system culls invisible geometry for performance optimization. In a ray tracing system, however, this leads to light leaks and other graphics glitches, as rays can propagate in all directions and hit seemingly "empty" areas. The solution required complete deactivation of the PVS system for static geometry, though this remained problematic for dynamic models.
+After comparing several candidates, I decided on **vkQuake** by Axel Gneitling, a Vulkan source port of the original *Quake*. It matched the technical requirements and, as the predecessor of *Quake II*, also fit thematically.  
 
-**Data Structure Unification:** Quake used different vertex formats for static level geometry and animated models. For the ray tracing pipeline, both had to be converted into a unified rt_vertex_t format that contains not only position data but also texture coordinates, texture and material indices.
+---
 
-**Buffer System Redesign:** Ray tracing requires a completely different approach. Instead of sequential draw calls, all potentially visible geometry must be available at runtime. This led to the implementation of static vertex and index buffers for level geometry, dynamic buffers for animated models, and acceleration structures for efficient ray intersections.
+## Architecture and Challenges
 
-The reason for this buffer structure lies in the nature of ray tracing: a ray can theoretically hit any geometry in the scene, which is why all data must be accessible at all times - a fundamental difference from traditional rasterization.
+VkQuake replaced most of QuakeSpasm's OpenGL graphics calls with Vulkan equivalents, but many of the underlying data structures remained close to the original code. Since I had never modded (or really played) a Quake game before, it took me some time to get used to its internal structure. Static level geometry and dynamic models such as NPCs and weapons were handled differently, and building acceleration structures required converting both into a format that the ray tracing pipeline could work with.
 
-## Path Tracing Pipeline Implementation
+![Static BLAS](/bachelor_thesis/static_blas.png)
+*Static geometry acceleration structure for level architecture*
 
-My approach followed a progressive development strategy: first, a functional Monte Carlo path tracer should be created as a foundation, which could later be extended with advanced techniques.
+![Dynamic BLAS](/bachelor_thesis/dynamic_blas.png)
+*Dynamic geometry acceleration structure for moving objects like NPCs and weapons*
 
-**Naive Monte Carlo Approach:** The implemented solution uses uniform hemisphere sampling to randomly sample the hemisphere around surface normals. At each surface hit, a random direction is generated and the ray continues in this direction until either a light source is hit or the maximum bounce depth is reached.
+Another challenge was that shaders need direct access to material information of the hit geometry. To simplify this, I created a unified buffer system that mapped the different data structures onto one format, so the shaders didn't have to handle static and dynamic geometry separately.  
 
-**Material Simplification:** Since Quake's original textures contain no explicit material information, exclusively uniform hemisphere sampling was used. This leads to a uniformly diffuse material representation of all surfaces. Interestingly, this approach fits perfectly with Quake's visual aesthetic, as the game was originally designed for diffuse materials.
+The structural challenges were one side of the work. The other side were the **systems** deeply embedded in Quake's rendering logic, which conflicted with real-time ray tracing. Quake's PVS (Potentially Visible Set) system, for example, culls geometry based on the player's position and was difficult to disable without breaking the game in subtle ways. Frustum culling was easier to remove, but PVS turned out to be notoriously tricky.
 
-**Ray Tracing Pipeline:** The Vulkan implementation uses the VK_KHR_ray_tracing_pipeline extension with three main shader types: Ray Generation Shader (generates primary rays for each pixel), Closest Hit Shader (handles surface interactions and calculates new ray directions), and Miss Shader (defines behavior when rays hit no geometry).
+![PVS Point of View](/bachelor_thesis/pvs_pov.png)
+*Player's perspective showing how PVS affects visible geometry*
 
-## Limitations of the Naive Approach
+![PVS Debug Visualization](/bachelor_thesis/pvs_debug.png)
+*Debug visualization of Quake's PVS system showing geometry culling*
 
-The biggest weakness shows in scenes with small light sources. Since random hemisphere sampling rarely hits light sources, the system practically fails completely in dark interior rooms. This makes the game playable in its current form only with sufficient lighting.
+The lighting system also caused issues: Quake's baked lightmaps had to be disabled, and while I attempted to convert their sources into real-time lights, many of them were only placed to artificially brighten areas and looked unnatural when treated as actual light sources. To fill the gaps, I also experimented with Quake's "fullbright" textures to simulate additional world lights, though these too came with trade-offs.  
 
-**Planned Extensions:** The original concept envisioned gradually extending the renderer with Next Event Estimation (direct light source sampling) and Multiple Importance Sampling. These techniques would have drastically improved efficiency in low-light conditions but could not be implemented due to time constraints.
+---
 
-## Conclusion
+## Path Tracing Pipeline
 
-The work demonstrates both the technical feasibility and practical limitations of such an undertaking. While the implementation produces impressive soft shadows and realistic light transitions with sufficient lighting, it simultaneously reveals the complexity of modern real-time path tracing solutions.`,
+My implementation followed a step-by-step strategy. First, I built a simple Monte Carlo path tracer as the foundation. Rays were sampled uniformly across a hemisphere around each surface normal, bouncing until they either hit a light source or reached a maximum depth. Since Quake textures contain no material data, all surfaces were treated as diffuse, which—perhaps coincidentally—fit surprisingly well with the game's original look.  
+
+![Shader Pipeline Diagram](/bachelor_thesis/shader_diagram.png)
+*Ray tracing shader pipeline showing the flow between Ray Generation, Closest Hit, and Miss shaders*
+
+The Vulkan implementation used the "VK_KHR_ray_tracing_pipeline" extension, with the classic setup of Ray Generation, Closest Hit, and Miss Shaders. While basic, this already produced soft shadows and more realistic light transitions in well-lit environments.  
+
+---
+
+## Limitations and Outlook
+
+The biggest weakness of this naive approach appeared in scenes with small or sparse light sources. Because uniform sampling rarely found them, darker areas were practically unplayable. Planned improvements such as Next Event Estimation and Multiple Importance Sampling would have helped tremendously here, but time constraints meant they didn't make it into the final version.
+
+![Low Sampling Rate](/bachelor_thesis/low_sampling_rate.png)
+*Low sampling rate results showing increased noise and visual quality trade-offs*
+
+![High Sampling Rate](/bachelor_thesis/high_sampling_rate.png)
+*Higher sampling rate producing cleaner results but at the cost of performance*
+
+Still, the project showed both sides of such an undertaking: on one hand, it proved technically feasible and created impressive results; on the other, it highlighted just how complex real-time path tracing really is. In the end, it was an inspiring journey from theory to practice—and a way to bring a piece of modern graphics technology into one of gaming's classics.  
+`,
     links: {
-      pdf: '/bachelor-thesis.pdf'
+      pdf: '/bachelor_thesis/bachelor-thesis.pdf',
+      github: 'https://github.com/Ruslando/rtQuake'
     }
   },
   'coursework-project-1': {

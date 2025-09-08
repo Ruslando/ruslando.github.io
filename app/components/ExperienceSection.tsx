@@ -24,7 +24,7 @@ export default function ExperienceSection() {
       company: 'Hochschule für Technik und Wirtschaft Berlin',
       period: '10.2022 – 05.2025',
       location: 'Berlin, Germany',
-      description: 'Advanced studies in media technology with specialization in interactive systems and web technologies.',
+      description: '',
       achievements: [
         'Specialization: Game Technology & Interactive Systems and Web Technology',
         'Master\'s Thesis: Research and evaluation of the use of Large Language Models and graph databases for the development of agentic systems in Unity, utilizing LangChain / LangGraph and Neo4j'

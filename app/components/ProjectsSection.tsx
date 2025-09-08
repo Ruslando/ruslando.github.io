@@ -12,7 +12,7 @@ export default function ProjectsSection() {
 
   const renderProjectGroup = (projectList: typeof projects, title: string) => (
     <div className="space-y-6">
-      <h3 className="text-xl font-medium text-gray-800 pl-4">{title}</h3>
+      <h3 className="text-xl font-medium text-gray-800 pl-4 mb-6">{title}</h3>
       <div className="space-y-8">
         {projectList.map((project) => (
           <ContentCard
@@ -28,10 +28,10 @@ export default function ProjectsSection() {
             <div className="space-y-4">
               <div>{truncateText(project.description, 300)}</div>
               
-              {/* External links inside the expandable content (excluding PDF) */}
-              {Object.entries(project.links).filter(([type]) => type !== 'pdf').length > 0 && (
+              {/* External links inside the expandable content (excluding PDF and GitHub) */}
+              {Object.entries(project.links).filter(([type]) => type !== 'pdf' && type !== 'github').length > 0 && (
                 <div className="flex gap-4 text-sm">
-                  {Object.entries(project.links).filter(([type]) => type !== 'pdf').map(([type, url]) => (
+                  {Object.entries(project.links).filter(([type]) => type !== 'pdf' && type !== 'github').map(([type, url]) => (
                     <a 
                       key={type} 
                       href={url as string}
