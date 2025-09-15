@@ -3,6 +3,14 @@ import { notFound } from 'next/navigation'
 import { projectsData } from '../../data/projects'
 import { marked } from 'marked'
 import { FaGithub, FaFileAlt, FaCode, FaPlay, FaExternalLinkAlt } from 'react-icons/fa'
+import { MastersThesisGallery } from '../../components/MastersThesisGallery'
+import { 
+  RenderingComparisonGallery, 
+  AccelerationStructuresGallery, 
+  PVSSystemGallery, 
+  PipelineDiagramsGallery, 
+  SamplingComparisonGallery 
+} from '../../components/BachelorThesisGalleries'
 
 export async function generateStaticParams() {
   return Object.keys(projectsData).map((id) => ({
@@ -117,12 +125,48 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
 
         {/* Full Description */}
         <section className="mb-12">
-          <div 
-            className="markdown-content text-gray-700 leading-relaxed"
-            dangerouslySetInnerHTML={{ 
-              __html: marked(project.description) 
-            }}
-          />
+          <div className="markdown-content text-gray-700 leading-relaxed">
+            {(() => {
+              let content = project.description
+
+              // Replace gallery markers with placeholders, then render
+              content = content
+                .replace('<MastersThesisGallery />', '<!-- MASTERS_GALLERY -->')
+                .replace('<RenderingComparisonGallery />', '<!-- RENDERING_GALLERY -->')
+                .replace('<AccelerationStructuresGallery />', '<!-- ACCELERATION_GALLERY -->')
+                .replace('<PVSSystemGallery />', '<!-- PVS_GALLERY -->')
+                .replace('<PipelineDiagramsGallery />', '<!-- PIPELINE_GALLERY -->')
+                .replace('<SamplingComparisonGallery />', '<!-- SAMPLING_GALLERY -->')
+
+              const htmlContent = marked(content) as string
+
+              // Split by gallery placeholders and render
+              const parts = htmlContent.split(/(<!-- \w+_GALLERY -->)/)
+
+              return (
+                <>
+                  {parts.map((part, index) => {
+                    if (part === '<!-- MASTERS_GALLERY -->') {
+                      return <div key={index} className="my-8"><MastersThesisGallery /></div>
+                    } else if (part === '<!-- RENDERING_GALLERY -->') {
+                      return <div key={index} className="my-8"><RenderingComparisonGallery /></div>
+                    } else if (part === '<!-- ACCELERATION_GALLERY -->') {
+                      return <div key={index} className="my-8"><AccelerationStructuresGallery /></div>
+                    } else if (part === '<!-- PVS_GALLERY -->') {
+                      return <div key={index} className="my-8"><PVSSystemGallery /></div>
+                    } else if (part === '<!-- PIPELINE_GALLERY -->') {
+                      return <div key={index} className="my-8"><PipelineDiagramsGallery /></div>
+                    } else if (part === '<!-- SAMPLING_GALLERY -->') {
+                      return <div key={index} className="my-8"><SamplingComparisonGallery /></div>
+                    } else if (part.trim()) {
+                      return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />
+                    }
+                    return null
+                  })}
+                </>
+              )
+            })()}
+          </div>
         </section>
 
         {/* Features (if extracted) */}
