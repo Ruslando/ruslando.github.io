@@ -15,13 +15,16 @@ export default async function PublicationDetail({ params }: { params: Promise<{ 
   }
 
   // Type assertion since we know publication exists here
-  const pub = publication as { 
-    title: string; 
-    authors: string; 
-    venue: string; 
-    year: string; 
-    abstract: string; 
-    keywords: string[]; 
+  const pub = publication as {
+    title: string;
+    authors: string;
+    conference?: string;
+    publisher?: string;
+    pages?: string;
+    venue?: string;
+    year: string;
+    abstract: string;
+    keywords: string[];
     links: Record<string, string>;
     citations?: number;
     bibtex?: string;
@@ -50,9 +53,26 @@ export default async function PublicationDetail({ params }: { params: Promise<{ 
             <p>
               <span className="font-medium">Authors:</span> {pub.authors}
             </p>
-            <p>
-              <span className="font-medium">Published in:</span> {pub.venue} ({pub.year})
-            </p>
+            {pub.conference && (
+              <p>
+                <span className="font-medium">Conference:</span> {pub.conference} ({pub.year})
+              </p>
+            )}
+            {pub.publisher && (
+              <p>
+                <span className="font-medium">Publisher:</span> {pub.publisher}
+              </p>
+            )}
+            {pub.pages && (
+              <p>
+                <span className="font-medium">Pages:</span> {pub.pages}
+              </p>
+            )}
+            {pub.venue && (
+              <p>
+                <span className="font-medium">Published in:</span> {pub.venue} ({pub.year})
+              </p>
+            )}
             {pub.citations && pub.citations > 0 && (
               <p>
                 <span className="font-medium">Citations:</span> {pub.citations}
