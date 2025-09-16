@@ -14,6 +14,9 @@ interface ContentCardProps {
   tags?: string[]
   authors?: string
   venue?: string
+  conference?: string
+  publisher?: string
+  pages?: string
   company?: string
   period?: string
   achievements?: string[]
@@ -31,6 +34,9 @@ export function ContentCard({
   tags,
   authors,
   venue,
+  conference,
+  publisher,
+  pages,
   company,
   period,
   achievements,
@@ -117,6 +123,24 @@ export function ContentCard({
               </p>
             )}
             
+            {conference && (
+              <p className="text-gray-600 mb-2 text-sm">
+                <span className="font-medium">Conference:</span> {conference}
+              </p>
+            )}
+
+            {publisher && (
+              <p className="text-gray-600 mb-2 text-sm">
+                <span className="font-medium">Publisher:</span> {publisher}
+              </p>
+            )}
+
+            {pages && (
+              <p className="text-gray-600 mb-2 text-sm">
+                <span className="font-medium">Pages:</span> {pages}
+              </p>
+            )}
+
             {venue && (
               <p className="text-gray-600 mb-2 text-sm">
                 <span className="font-medium">Venue:</span> {venue}
@@ -201,6 +225,24 @@ export function ContentCard({
         </p>
       )}
       
+      {conference && (
+        <p className="text-gray-600 mb-2 text-sm">
+          <span className="font-medium">Conference:</span> {conference}
+        </p>
+      )}
+
+      {publisher && (
+        <p className="text-gray-600 mb-2 text-sm">
+          <span className="font-medium">Publisher:</span> {publisher}
+        </p>
+      )}
+
+      {pages && (
+        <p className="text-gray-600 mb-2 text-sm">
+          <span className="font-medium">Pages:</span> {pages}
+        </p>
+      )}
+
       {venue && (
         <p className="text-gray-600 mb-2 text-sm">
           <span className="font-medium">Venue:</span> {venue}

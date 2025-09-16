@@ -151,11 +151,62 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
     id: 'coursework-project-2',
     title: 'Simulation of Reprojection Techniques as Shader in Unity',
     subtitle: 'Academic Coursework',
-    year: 'September 2023',
+    year: 'September 20, 2023',
     category: 'coursework',
     keywords: ['Unity', 'Shaders', 'Reprojection', 'Computer Graphics'],
-    description: `This project page is currently under construction. Content will be available soon.`,
+    description: `# Bringing VR Reprojection to Traditional Flatscreen Gaming
+
+Latency and inconsistent frame rates are critical challenges in gaming, particularly in VR systems where unresolved issues can cause physical problems like dizziness and nausea. To overcome these problems, reprojection techniques like "spacewarp" are used to drastically reduce frame rate spikes and perceived latency, at the cost of visual artifacts. These techniques are commonly used in VR but surprisingly absent in flatscreen gaming.
+
+This independent coursework explored whether these VR-optimized methods can effectively enhance traditional flatscreen gaming experiences by modifying and enhancing Comrade Stinger's Unity Demo on Reprojection and Mouse-Independent Movement.
+
+(NOTE: NVIDIA unveiled Reflex 2 Frame Warp, a machine-learning-based reprojection algorithm to address this exact issue for flatscreen gaming. This technology wasn't available during the writing of the independent coursework and, as of September 2025, still hasn't been officially released.)
+
+## Technical Foundation
+
+VR reprojection techniques emerged to solve a fundamental problem: when rendering can't keep pace with display refresh rates, players experience discomfort from latency and frame drops. Rather than dropping frames entirely, these techniques intelligently warp the most recent rendered frame based on updated camera information, maintaining smooth visual flow even when new renders aren't ready.
+
+**Orientational Timewarp** handles rotational head movements by mapping pixel direction vectors from current to previous camera planes, creating a "look around" effect within the existing image. This approach offers predictable, fast calculations but struggles with positional changes.
+
+**Positional Timewarp** addresses both rotation and translation by reconstructing 3D geometry from depth buffers and reprojecting it to new viewpoints. While more computationally intensive, it handles camera movement significantly better, though it introduces occlusion holes requiring fill algorithms.
+
+**Spacewarp** leverages motion vectors to detect spatiotemporal changes, enabling accurate extrapolation even with stationary cameras. This represents the most sophisticated approach but demands the highest computational resources and complex motion vector management.
+
+## Implementation and Refactoring
+
+The original plan for this independent coursework was to test the implementation across different gaming genres and camera perspectives to gauge the effectiveness of these techniques beyond the originally implemented first-person controller. For example, in a third-person controller, the occlusion holes from the player character might become more obvious, or less obvious in an isometric RTS game.
+
+However, the original implementation suffered from several limitations and was hardcoded to work only with a specialized first-person controller, which constrained its broader applicability and required me to undertake comprehensive refactoring.
+
+### Architecture Improvements
+
+**Post-Process Integration**: The original implementation featured a complicated dual-camera system deeply tied to a custom first-person controller with an opaque material system that displayed the reprojected recordings in front of the controller. I streamlined this into a single post-processing effect. This transformation enables easy integration with any camera setup and eliminates the complex scene structure dependencies of the original implementation.
+
+**Projection Method Overhaul**: The original coordinate transformation methods contained numerical errors causing image blur and displacement even when camera planes remained unchanged. I replaced these with standard graphics pipeline transformations using proper inverse projection matrices, eliminating precision issues and ensuring pixel-perfect results when appropriate.
+
+<NumericalErrorGallery />
+
+**Modular Shader Design**: I restructured the monolithic fragment shader into distinct subpasses for each reprojection method, removing conditional branching and improving both performance and maintainability.
+
+### Advanced Features
+
+Beyond the existing reprojection techniques, I added improved and new techniques based on recent research.
+
+**Enhanced Positional Timewarp**: I implemented Finn Sinclair's variable step-size ray marching algorithm, reducing maximum ray marching steps from 100 to 32 while improving convergence accuracy. I replaced the original 3x3 kernel occlusion filling with epipolar line backtracking, producing more natural results for occluded areas.
+
+<OcclusionFillingGallery />
+
+**Spacewarp Implementation**: I built a complete spacewarp system using motion vector accumulation to handle frame rate simulation accurately. This required developing a motion vector history buffer that maintains correct temporal relationships across simulated frame boundaries.
+
+**Flexible Frame Rate Control**: I introduced separate simulated and extrapolated frame rate controls, enabling precise testing scenarios that weren't possible with the original single-parameter system.
+
+## Key Results and Future Potential
+
+The original demonstration was vastly improved by enhancing the existing reprojection implementation as well as introducing a spacewarp variant, which is more commonly seen in modern VR titles. The transition to a screen-space shader also allows for much easier integration into existing camera setups, enabling general-purpose demonstration beyond the existing first-person controller setup, as well as more fine-grained control over the simulated framerate controls.
+
+Current limitations of reprojection techniques center primarily on occlusion handling rather than fundamental algorithmic constraints. Advanced hole-filling approaches—potentially leveraging machine learning or real-time analytical depth generation—could address these gaps.`,
     links: {
+      github: 'https://github.com/Ruslando/ReprojectionExamples'
     }
   }
 }

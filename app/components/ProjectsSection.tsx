@@ -21,8 +21,8 @@ export default function ProjectsSection() {
             title={project.title}
             year={project.year}
             tags={project.keywords}
-            interactive={project.id === 'quake-path-tracing' || project.id === 'masters-thesis'}
-            href={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' ? `/projects/${project.id}` : undefined}
+            interactive={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' || project.id === 'coursework-project-2'}
+            href={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' || project.id === 'coursework-project-2' ? `/projects/${project.id}` : undefined}
             expandable={true}
           >
             <div className="space-y-4">

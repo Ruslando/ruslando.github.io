@@ -4,13 +4,17 @@ import { projectsData } from '../../data/projects'
 import { marked } from 'marked'
 import { FaGithub, FaFileAlt, FaCode, FaPlay, FaExternalLinkAlt } from 'react-icons/fa'
 import { MastersThesisGallery } from '../../components/MastersThesisGallery'
-import { 
-  RenderingComparisonGallery, 
-  AccelerationStructuresGallery, 
-  PVSSystemGallery, 
-  PipelineDiagramsGallery, 
-  SamplingComparisonGallery 
+import {
+  RenderingComparisonGallery,
+  AccelerationStructuresGallery,
+  PVSSystemGallery,
+  PipelineDiagramsGallery,
+  SamplingComparisonGallery
 } from '../../components/BachelorThesisGalleries'
+import {
+  NumericalErrorGallery,
+  OcclusionFillingGallery
+} from '../../components/IC1Galleries'
 
 export async function generateStaticParams() {
   return Object.keys(projectsData).map((id) => ({
@@ -137,6 +141,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
                 .replace('<PVSSystemGallery />', '<!-- PVS_GALLERY -->')
                 .replace('<PipelineDiagramsGallery />', '<!-- PIPELINE_GALLERY -->')
                 .replace('<SamplingComparisonGallery />', '<!-- SAMPLING_GALLERY -->')
+                .replace('<NumericalErrorGallery />', '<!-- NUMERICAL_ERROR_GALLERY -->')
+                .replace('<OcclusionFillingGallery />', '<!-- OCCLUSION_FILLING_GALLERY -->')
 
               const htmlContent = marked(content) as string
 
@@ -158,6 +164,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
                       return <div key={index} className="my-8"><PipelineDiagramsGallery /></div>
                     } else if (part === '<!-- SAMPLING_GALLERY -->') {
                       return <div key={index} className="my-8"><SamplingComparisonGallery /></div>
+                    } else if (part === '<!-- NUMERICAL_ERROR_GALLERY -->') {
+                      return <div key={index} className="my-8"><NumericalErrorGallery /></div>
+                    } else if (part === '<!-- OCCLUSION_FILLING_GALLERY -->') {
+                      return <div key={index} className="my-8"><OcclusionFillingGallery /></div>
                     } else if (part.trim()) {
                       return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />
                     }
