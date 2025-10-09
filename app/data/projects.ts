@@ -136,17 +136,17 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
       github: 'https://github.com/Ruslando/rtQuake'
     }
   },
-  'coursework-project-1': {
-    id: 'coursework-project-1',
-    title: 'Modification of "Quake" with RTX Remix',
-    subtitle: 'Academic Coursework',
-    year: 'April 2024',
-    category: 'coursework',
-    keywords: ['RTX Remix', 'Ray Tracing', 'Quake', 'NVIDIA'],
-    description: `This project page is currently under construction. Content will be available soon.`,
-    links: {
-    }
-  },
+  // 'coursework-project-1': {
+  //   id: 'coursework-project-1',
+  //   title: 'Modification of "Quake" with RTX Remix',
+  //   subtitle: 'Academic Coursework',
+  //   year: 'April 2024',
+  //   category: 'coursework',
+  //   keywords: ['RTX Remix', 'Ray Tracing', 'Quake', 'NVIDIA'],
+  //   description: `This project page is currently under construction. Content will be available soon.`,
+  //   links: {
+  //   }
+  // },
   'coursework-project-2': {
     id: 'coursework-project-2',
     title: 'Simulation of Reprojection Techniques as Shader in Unity',

@@ -30,12 +30,12 @@ export default function Home() {
       id: 'publications',
       label: 'Publications',
       content: <PublicationsSection />
-    },
-    {
-      id: 'writing',
-      label: 'Blog',
-      content: <WritingSection />
     }
+    // {
+    //   id: 'writing',
+    //   label: 'Blog',
+    //   content: <WritingSection />
+    // }
   ]
 
   return (
@@ -127,11 +127,11 @@ export default function Home() {
         </Suspense>
 
         {/* Footer */}
-        <footer className="pt-12 mt-20">
+        {/* <footer className="pt-12 mt-20">
           <div className="border-t border-gray-200 pt-8">
-            <p className="text-sm text-gray-500 font-light">Last updated: {new Date().getFullYear()}</p>
+            <p className="text-sm text-gray-500 font-light">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
           </div>
-        </footer>
+        </footer> */}
 
       </div>
     </main>

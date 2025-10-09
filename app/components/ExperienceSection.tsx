@@ -6,7 +6,7 @@ export default function ExperienceSection() {
     {
       title: 'Student Research Assistant – Software Development',
       company: 'Fraunhofer-Institut für Produktionsanlagen und Konstruktionstechnik',
-      period: 'October 2021 – Current',
+      period: 'October 2021 – September 2025',
       location: 'Berlin, Germany',
       description: '',
       achievements: [
