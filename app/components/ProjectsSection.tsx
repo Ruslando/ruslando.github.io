@@ -1,7 +1,6 @@
 'use client'
 
 import { projectsData } from '../data/projects'
-import { truncateText } from '../utils/textUtils'
 import { SectionHeader } from './ui/SectionHeader'
 import { ContentCard } from './ui/ContentCard'
 
@@ -9,6 +8,7 @@ export default function ProjectsSection() {
   const projects = Object.values(projectsData)
   const thesisProjects = projects.filter(p => p.category === 'thesis')
   const courseworkProjects = projects.filter(p => p.category === 'coursework')
+  const hobbyProjects = projects.filter(p => p.category === 'hobby')
 
   const renderProjectGroup = (projectList: typeof projects, title: string) => (
     <div className="space-y-6">
@@ -26,7 +26,7 @@ export default function ProjectsSection() {
             expandable={true}
           >
             <div className="space-y-4">
-              <div>{truncateText(project.description, 300)}</div>
+              <div>{project.summary}</div>
               
               {/* External links inside the expandable content (excluding PDF and GitHub) */}
               {Object.entries(project.links).filter(([type]) => type !== 'pdf' && type !== 'github').length > 0 && (
@@ -59,6 +59,7 @@ export default function ProjectsSection() {
 
       {thesisProjects.length > 0 && renderProjectGroup(thesisProjects, "Thesis")}
       {courseworkProjects.length > 0 && renderProjectGroup(courseworkProjects, "Courseworks")}
+      {hobbyProjects.length > 0 && renderProjectGroup(hobbyProjects, "Personal Projects")}
     </div>
   )
 }

@@ -6,6 +6,7 @@ export const projectsData = {
     year: 'February 21, 2025',
     category: 'thesis',
     keywords: ['Unity', 'LangChain', 'LangGraph', 'Neo4j', 'LLM', 'AI Agents'],
+    summary: 'In this master thesis, I explored integrating LLM-based function-calling agents into Unity game environments using a Neo4j knowledge graph and LangGraph agent framework. Despite relatively low overall success rates and notable latency concerns limiting practical real-time integration, the evaluation validated the architectural approach with high partial success rates for multi-step function calls, demonstrating the feasibility of the concept.',
     description: `# From Natural Language Request to Method Call: Building Function-Calling Agents in Unity
 
 The ability of LLMs to understand human input opens countless possibilities for integration into modern interactive systems like video games. I set out to implement an LLM-based function calling agent that could respond to prompts like "open the door in front of you with the appropriate tool" by perceiving its environment, reasoning about the task, and executing it autonomously. My thesis explores whether this level of natural language control is technically feasible in game environments and whether it's worth the integration cost given current LLM performance limitations.
@@ -81,6 +82,7 @@ While unsuitable for real-time gameplay today, this architecture proves that nat
     year: 'March 4, 2022',
     category: 'thesis',
     keywords: ['Vulkan', 'C', 'GLSL', 'Path Tracing', 'NVIDIA RTX'],
+    summary: 'In this bachelor thesis, I explored the feasibility of integrating a hardware-accelerated path tracing renderer into a retro video game using Vulkan ray tracing extensions. The thesis examined both technical and conceptual challenges inherent to such an integration. I successfully implemented a Monte Carlo path tracer in the game "Quake" that achieved physically accurate lighting calculations while maintaining acceptable frame rates.',
     description: `# Implementing a Hardware-Accelerated Path Tracing Renderer in 'Quake'
 
 During my studies, I attended a course called *Game Technologies and Interactive Systems: Current Topics*, which dealt with the latest developments in the gaming industry. The trending topic at the time was Ray Tracing, largely influenced by the release of NVIDIA RTX cards and the new lighting effects that slowly made their way into games.  
@@ -147,6 +149,31 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
   //   links: {
   //   }
   // },
+  'llm-conversation-framework': {
+    id: 'llm-conversation-framework',
+    title: 'LLM-Based Conversation Framework for Interactive Game Environments',
+    subtitle: 'Personal Project',
+    year: 'October 2025',
+    category: 'hobby',
+    keywords: ['LangGraph', 'OWL 2', 'LLM', 'Unity', 'Python', 'GraphDB', 'AI Agents'],
+    summary: 'In this ongoing personal project, I am developing a conversation framework for believable NPCs in interactive game environments. Building on insights from my master thesis, this project combines an OWL 2-compliant ontology for personality and memory representation with a LangGraph-based agent system, enabling NPCs to maintain consistent personalities, remember past interactions, and generate context-aware dialogue while controlling game actions.',
+    description: `# LLM-Based Conversation Framework for Interactive Game Environments
+
+Building on insights from my master's thesis, this ongoing personal project explores how LLM-powered agents can generate context-aware conversations and control game actions in interactive environments. While my thesis focused on function-calling agents for task execution, this project shifts toward creating believable NPCs with personality-driven dialogue and memory systems.
+
+## Key Features
+
+**OWL 2-Compliant Ontology**: Development of an ontology following the Web Ontology Language 2 (OWL 2) standard to semantically represent personality values and memory structures. This formal knowledge representation enables reasoning about character traits, beliefs, relationships, and behavioral patterns.
+
+**LangGraph Agent Integration**: Implementation of a LangGraph-based LLM agent that generates context-sensitive conversation responses while maintaining the ability to control game actions. The agent bridges natural language understanding with executable game commands through Python and Unity integration.
+
+**Semantic Knowledge Storage**: Graph database (GraphDB) integration enables efficient storage and querying of the ontological structures, supporting complex relationship traversals and temporal memory patterns during real-time conversations.
+
+## Development Status
+
+This project is actively under development. The focus lies on creating NPCs that maintain personality consistency across conversations, remember past interactions, and react appropriately to changing game states by combining semantic web technologies with modern LLM agent frameworks.`,
+    links: {}
+  },
   'coursework-project-2': {
     id: 'coursework-project-2',
     title: 'Simulation of Reprojection Techniques as Shader in Unity',
@@ -154,6 +181,7 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
     year: 'September 20, 2023',
     category: 'coursework',
     keywords: ['Unity', 'Shaders', 'Reprojection', 'Computer Graphics'],
+    summary: 'In this coursework, I explored whether VR reprojection techniques designed for frame rate stabilization could benefit traditional flatscreen gaming. The project involved refactoring an existing demo into a modular post-processing system and implementing advanced techniques including enhanced positional timewarp with optimized ray marching and a complete spacewarp implementation, demonstrating the potential applicability of these methods beyond VR environments.',
     description: `# Bringing VR Reprojection to Traditional Flatscreen Gaming
 
 Latency and inconsistent frame rates are critical challenges in gaming, particularly in VR systems where unresolved issues can cause physical problems like dizziness and nausea. To overcome these problems, reprojection techniques like "spacewarp" are used to drastically reduce frame rate spikes and perceived latency, at the cost of visual artifacts. These techniques are commonly used in VR but surprisingly absent in flatscreen gaming.
@@ -221,8 +249,9 @@ export type Project = {
   title: string
   subtitle: string
   year: string
-  category: 'thesis' | 'coursework'
+  category: 'thesis' | 'coursework' | 'hobby'
   keywords: string[]
+  summary: string
   description: string
   links: ProjectLinks
 }

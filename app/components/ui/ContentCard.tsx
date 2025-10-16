@@ -84,8 +84,10 @@ export function ContentCard({
   }
 
   if (expandable) {
+    const hasDetailPage = interactive && href
+
     return (
-      <div className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]}`}>
+      <div className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]} ${hasDetailPage ? 'border-l-4 border-l-blue-500' : ''}`}>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors"
@@ -95,6 +97,13 @@ export function ContentCard({
               <h3 className="text-lg font-medium text-gray-900 leading-tight text-left">
                 {title}
               </h3>
+              {hasDetailPage && (
+                <div className="text-left mt-1">
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full whitespace-nowrap inline-block">
+                    Full Article
+                  </span>
+                </div>
+              )}
               {company && type === 'experience' && (
                 <p className="text-gray-600 text-sm mt-1 text-left">{company}</p>
               )}
@@ -179,18 +188,12 @@ export function ContentCard({
               </ul>
             )}
 
-            {/* Show Read More arrow for interactive cards or grayed out text */}
-            {type === 'project' && (
+            {/* Show Read More arrow for interactive cards */}
+            {type === 'project' && interactive && href && (
               <div className="flex gap-4 text-sm">
-                {interactive && href ? (
-                  <Link href={href} className="text-blue-600 hover:underline">
-                    Read More →
-                  </Link>
-                ) : (
-                  <span className="text-gray-400 cursor-not-allowed">
-                    Read More →
-                  </span>
-                )}
+                <Link href={href} className="text-blue-600 hover:underline">
+                  Read More →
+                </Link>
               </div>
             )}
             {/* Show Details arrow for non-project interactive cards */}
@@ -281,18 +284,12 @@ export function ContentCard({
         </ul>
       )}
 
-      {/* Show Read More arrow for interactive cards or grayed out text */}
-      {type === 'project' && (
+      {/* Show Read More arrow for interactive cards */}
+      {type === 'project' && interactive && href && (
         <div className="flex gap-4 text-sm">
-          {interactive && href ? (
-            <span className="text-blue-600 hover:underline cursor-pointer">
-              Read More →
-            </span>
-          ) : (
-            <span className="text-gray-400 cursor-not-allowed">
-              Read More →
-            </span>
-          )}
+          <span className="text-blue-600 hover:underline cursor-pointer">
+            Read More →
+          </span>
         </div>
       )}
       {/* Show Details arrow for non-project interactive cards */}
