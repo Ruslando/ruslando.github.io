@@ -46,10 +46,10 @@ export default function Home() {
           {/* Mobile: Centered layout */}
           <div className="block md:hidden text-center">
             <div className="mb-8">
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <div className="relative inline-block">
-                  <Image 
-                    src="/profile.jpg" 
+                  <Image
+                    src="/profile.jpg"
                     alt="Ruslan Novikov"
                     width={120}
                     height={120}
@@ -57,7 +57,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-black/10"></div>
                 </div>
-              </div>
+              </div> */}
               <PageTitle subtitle="M.Sc. Graduate & Full-Stack Developer">Ruslan Novikov</PageTitle>
             </div>
             <p className="text-gray-600 text-base leading-relaxed mb-8 max-w-2xl mx-auto">
@@ -74,10 +74,10 @@ export default function Home() {
                   Working student in full-stack development at Fraunhofer IPK and Master's graduate (M.Sc.) from HTW Berlin with experience in web development, game development and computer graphics.
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <div className="relative">
-                  <Image 
-                    src="/profile.jpg" 
+                  <Image
+                    src="/profile.jpg"
                     alt="Ruslan Novikov"
                     width={144}
                     height={144}
@@ -85,7 +85,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-black/10"></div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
