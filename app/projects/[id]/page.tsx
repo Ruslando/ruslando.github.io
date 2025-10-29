@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { projectsData } from '../../data/projects'
 import { marked } from 'marked'
-import { FaGithub, FaFileAlt, FaCode, FaPlay, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaGithub, FaFileAlt, FaCode, FaPlay, FaExternalLinkAlt, FaWrench, FaTerminal } from 'react-icons/fa'
 import { MastersThesisGallery } from '../../components/MastersThesisGallery'
 import {
   RenderingComparisonGallery,
@@ -80,20 +80,47 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
             </p>
           )}
 
-          {/* Technologies */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Keywords:</h3>
-            <div className="flex flex-wrap gap-2">
-              {project.keywords.map((tech) => (
-                <span 
-                  key={tech}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded"
-                >
-                  {tech}
-                </span>
-              ))}
+          {/* Technologies and Languages */}
+          {(project.technologies || project.languages) && (
+            <div className="mb-6 space-y-3">
+              {project.technologies && project.technologies.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <FaWrench className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Technologies</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1.5 bg-blue-50 text-blue-700 text-sm rounded-full border border-blue-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {project.languages && project.languages.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <FaTerminal className="w-3.5 h-3.5 text-green-600" />
+                    <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Languages</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.languages.map((lang) => (
+                      <span
+                        key={lang}
+                        className="px-3 py-1.5 bg-green-50 text-green-700 text-sm rounded-full border border-green-200"
+                      >
+                        {lang}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
           {/* Links */}
           {Object.keys(project.links).length > 0 && (

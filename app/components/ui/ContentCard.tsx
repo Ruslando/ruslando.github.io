@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { ReactNode, useState } from 'react'
-import { FaChevronDown } from 'react-icons/fa'
+import { FaChevronDown, FaWrench, FaTerminal } from 'react-icons/fa'
 
 interface ContentCardProps {
   title: string
@@ -12,6 +12,8 @@ interface ContentCardProps {
   interactive?: boolean
   href?: string
   tags?: string[]
+  technologies?: string[]
+  languages?: string[]
   authors?: string
   venue?: string
   conference?: string
@@ -24,14 +26,16 @@ interface ContentCardProps {
   children: ReactNode
 }
 
-export function ContentCard({ 
-  title, 
-  date, 
+export function ContentCard({
+  title,
+  date,
   year,
   type = 'project',
   interactive = false,
   href,
   tags,
+  technologies,
+  languages,
   authors,
   venue,
   conference,
@@ -44,6 +48,7 @@ export function ContentCard({
   children
 }: ContentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   
   const colorMap = {
     project: 'border-blue-200 hover:border-blue-300 hover:bg-blue-50/30',
@@ -87,20 +92,34 @@ export function ContentCard({
     const hasDetailPage = interactive && href
 
     return (
-      <div className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]} ${hasDetailPage ? 'border-l-4 border-l-blue-500' : ''}`}>
+      <div
+        className={`border bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg ${colorMap[type]}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors"
+          className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors cursor-pointer"
         >
           <div className="flex items-start justify-between w-full min-w-0">
             <div className="flex-1 min-w-0 mr-3">
               <h3 className="text-lg font-medium text-gray-900 leading-tight text-left">
-                {title}
+                {hasDetailPage ? (
+                  <Link
+                    href={href}
+                    onClick={(e) => e.stopPropagation()}
+                    className="hover:text-blue-600 transition-colors"
+                  >
+                    {title}
+                  </Link>
+                ) : (
+                  title
+                )}
               </h3>
               {hasDetailPage && (
                 <div className="text-left mt-1">
                   <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full whitespace-nowrap inline-block">
-                    Full Article
+                    Article
                   </span>
                 </div>
               )}
@@ -113,17 +132,21 @@ export function ContentCard({
                 {date || year || period}
               </span>
               <FaChevronDown
-                className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transition-transform duration-300 flex-shrink-0 ${
-                  isExpanded ? 'rotate-180' : ''
+                className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transition-all duration-300 flex-shrink-0 ${
+                  isExpanded ? 'rotate-180' : isHovered ? 'translate-y-0.5' : ''
                 }`}
               />
             </div>
           </div>
         </button>
-        
-        <div className={`transition-all duration-300 overflow-hidden ${
-          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+
+        <div className={`relative transition-all duration-300 ease-in-out overflow-hidden ${
+          isExpanded ? 'max-h-96 opacity-100' : isHovered && !isExpanded ? 'max-h-20 opacity-70' : 'max-h-0 opacity-0'
         }`}>
+          {/* Vignette gradient overlay for hover preview */}
+          <div className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-blue-900/50 via-blue-700/25 to-transparent pointer-events-none z-10 transition-opacity duration-300 ${
+            isHovered && !isExpanded ? 'opacity-100' : 'opacity-0'
+          }`} />
           <div className="px-6 pb-6">
             {/* Metadata based on type */}
             {authors && (
@@ -160,17 +183,21 @@ export function ContentCard({
               <p className="text-gray-600 mb-2">{company}</p>
             )}
 
-            {/* Tags for projects */}
-            {tags && tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {tags.map((tag) => (
-                  <span 
-                    key={tag}
-                    className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
+            {/* Technologies and Languages for projects */}
+            {type === 'project' && (technologies || languages) && (
+              <div className="text-gray-600 text-sm mb-3 space-y-1.5">
+                {technologies && technologies.length > 0 && (
+                  <p className="flex items-start gap-2">
+                    <FaWrench className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <span><span className="font-medium text-gray-700">Technologies:</span> {technologies.join(', ')}</span>
+                  </p>
+                )}
+                {languages && languages.length > 0 && (
+                  <p className="flex items-start gap-2">
+                    <FaTerminal className="w-3.5 h-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span><span className="font-medium text-gray-700">Languages:</span> {languages.join(', ')}</span>
+                  </p>
+                )}
               </div>
             )}
 
@@ -186,23 +213,6 @@ export function ContentCard({
                   <li key={i}>• {achievement}</li>
                 ))}
               </ul>
-            )}
-
-            {/* Show Read More arrow for interactive cards */}
-            {type === 'project' && interactive && href && (
-              <div className="flex gap-4 text-sm">
-                <Link href={href} className="text-blue-600 hover:underline">
-                  Read More →
-                </Link>
-              </div>
-            )}
-            {/* Show Details arrow for non-project interactive cards */}
-            {type !== 'project' && interactive && href && (
-              <div className="flex gap-4 text-sm">
-                <Link href={href} className="text-blue-600 hover:underline">
-                  Details →
-                </Link>
-              </div>
             )}
           </div>
         </div>
@@ -256,17 +266,21 @@ export function ContentCard({
         <p className="text-gray-600 mb-2">{company}</p>
       )}
 
-      {/* Tags for projects */}
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-3">
-          {tags.map((tag) => (
-            <span 
-              key={tag}
-              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-            >
-              {tag}
-            </span>
-          ))}
+      {/* Technologies and Languages for projects */}
+      {type === 'project' && (technologies || languages) && (
+        <div className="text-gray-600 text-sm mb-3 space-y-1.5">
+          {technologies && technologies.length > 0 && (
+            <p className="flex items-start gap-2">
+              <FaWrench className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <span><span className="font-medium text-gray-700">Technologies:</span> {technologies.join(', ')}</span>
+            </p>
+          )}
+          {languages && languages.length > 0 && (
+            <p className="flex items-start gap-2">
+              <FaTerminal className="w-3.5 h-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+              <span><span className="font-medium text-gray-700">Languages:</span> {languages.join(', ')}</span>
+            </p>
+          )}
         </div>
       )}
 

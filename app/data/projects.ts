@@ -5,7 +5,8 @@ export const projectsData = {
     subtitle: 'Thesis',
     year: 'February 21, 2025',
     category: 'thesis',
-    keywords: ['Unity', 'LangChain', 'LangGraph', 'Neo4j', 'LLM', 'AI Agents'],
+    technologies: ['Unity', 'LangChain', 'LangGraph', 'Neo4j'],
+    languages: ['C#', 'Python'],
     summary: 'In this master thesis, I explored integrating LLM-based function-calling agents into Unity game environments using a Neo4j knowledge graph and LangGraph agent framework. Despite relatively low overall success rates and notable latency concerns limiting practical real-time integration, the evaluation validated the architectural approach with high partial success rates for multi-step function calls, demonstrating the feasibility of the concept.',
     description: `# From Natural Language Request to Method Call: Building Function-Calling Agents in Unity
 
@@ -81,7 +82,8 @@ While unsuitable for real-time gameplay today, this architecture proves that nat
     subtitle: 'Thesis',
     year: 'March 4, 2022',
     category: 'thesis',
-    keywords: ['Vulkan', 'C', 'GLSL', 'Path Tracing', 'NVIDIA RTX'],
+    technologies: ['Vulkan', 'NVIDIA RTX'],
+    languages: ['C', 'GLSL'],
     summary: 'In this bachelor thesis, I explored the feasibility of integrating a hardware-accelerated path tracing renderer into a retro video game using Vulkan ray tracing extensions. The thesis examined both technical and conceptual challenges inherent to such an integration. I successfully implemented a Monte Carlo path tracer in the game "Quake" that achieved physically accurate lighting calculations while maintaining acceptable frame rates.',
     description: `# Implementing a Hardware-Accelerated Path Tracing Renderer in 'Quake'
 
@@ -155,7 +157,8 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
     subtitle: 'Personal Project',
     year: 'October 2025',
     category: 'hobby',
-    keywords: ['LangGraph', 'OWL 2', 'LLM', 'Unity', 'Python', 'GraphDB', 'AI Agents'],
+    technologies: ['Unity', 'LangGraph', 'OWL 2', 'GraphDB'],
+    languages: ['C#', 'Python'],
     summary: 'In this ongoing personal project, I am developing a conversation framework for believable NPCs in interactive game environments. Building on insights from my master thesis, this project combines an OWL 2-compliant ontology for personality and memory representation with a LangGraph-based agent system, enabling NPCs to maintain consistent personalities, remember past interactions, and generate context-aware dialogue while controlling game actions.',
     description: `# LLM-Based Conversation Framework for Interactive Game Environments
 
@@ -180,7 +183,8 @@ This project is actively under development. The focus lies on creating NPCs that
     subtitle: 'Academic Coursework',
     year: 'September 20, 2023',
     category: 'coursework',
-    keywords: ['Unity', 'Shaders', 'Reprojection', 'Computer Graphics'],
+    technologies: ['Unity'],
+    languages: ['C#', 'HLSL'],
     summary: 'In this coursework, I explored whether VR reprojection techniques designed for frame rate stabilization could benefit traditional flatscreen gaming. The project involved refactoring an existing demo into a modular post-processing system and implementing advanced techniques including enhanced positional timewarp with optimized ray marching and a complete spacewarp implementation, demonstrating the potential applicability of these methods beyond VR environments.',
     description: `# Bringing VR Reprojection to Traditional Flatscreen Gaming
 
@@ -236,6 +240,17 @@ Current limitations of reprojection techniques center primarily on occlusion han
     links: {
       github: 'https://github.com/Ruslando/ReprojectionExamples'
     }
+  },
+  'anaphylaxis-app': {
+    id: 'anaphylaxis-app',
+    title: 'IMI Showtime - B1: Anaphylaxis App',
+    subtitle: 'University Project',
+    year: 'October 2019 - February 2020',
+    category: 'university',
+    technologies: ['Android', 'Room Database'],
+    languages: ['Kotlin'],
+    summary: 'Implemented a native Android app to improve first aid for anaphylactic shocks in children. Responsible for building the database using Android Room.',
+    links: {}
   }
 }
 
@@ -249,9 +264,10 @@ export type Project = {
   title: string
   subtitle: string
   year: string
-  category: 'thesis' | 'coursework' | 'hobby'
-  keywords: string[]
+  category: 'thesis' | 'coursework' | 'hobby' | 'university'
+  technologies: string[]
+  languages: string[]
   summary: string
-  description: string
+  description?: string
   links: ProjectLinks
 }

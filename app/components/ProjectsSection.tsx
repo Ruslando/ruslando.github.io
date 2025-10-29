@@ -8,6 +8,7 @@ export default function ProjectsSection() {
   const projects = Object.values(projectsData)
   const thesisProjects = projects.filter(p => p.category === 'thesis')
   const courseworkProjects = projects.filter(p => p.category === 'coursework')
+  const universityProjects = projects.filter(p => p.category === 'university')
   const hobbyProjects = projects.filter(p => p.category === 'hobby')
 
   const renderProjectGroup = (projectList: typeof projects, title: string) => (
@@ -20,9 +21,10 @@ export default function ProjectsSection() {
             type="project"
             title={project.title}
             year={project.year}
-            tags={project.keywords}
-            interactive={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' || project.id === 'coursework-project-2'}
-            href={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' || project.id === 'coursework-project-2' ? `/projects/${project.id}` : undefined}
+            technologies={project.technologies}
+            languages={project.languages}
+            interactive={project.id === 'quake-path-tracing' || project.id === 'masters-thesis'}
+            href={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' ? `/projects/${project.id}` : undefined}
             expandable={true}
           >
             <div className="space-y-4">
@@ -59,6 +61,7 @@ export default function ProjectsSection() {
 
       {thesisProjects.length > 0 && renderProjectGroup(thesisProjects, "Thesis")}
       {courseworkProjects.length > 0 && renderProjectGroup(courseworkProjects, "Courseworks")}
+      {universityProjects.length > 0 && renderProjectGroup(universityProjects, "University Projects")}
       {hobbyProjects.length > 0 && renderProjectGroup(hobbyProjects, "Personal Projects")}
     </div>
   )
