@@ -11,9 +11,20 @@ export default function ExperienceSection() {
       description: '',
       achievements: [
         'Developed a Progressive Web App for data flow modeling using Vue.js, .NET Entity Framework, and MS SQL Server',
-        'Implemented real-time collaboration features with Automerge CRDT technology',
-        'Designed a domain-specific OWL ontology for semantic company data representation',
-        'Built a RESTful API with Java Spring Boot for ontology management'
+        'Developed a real-time collaboration solution using Conflict-Free Replicated Data Types with Automerge',
+        'Designed and developed a Java Spring Boot REST API as an abstraction layer for GraphDB integration',
+        'Implemented a role-based and policy-based authorization system in .NET Entity Framework to secure data and API endpoints'
+      ]
+    },
+    {
+      title: 'Intern – Software Development',
+      company: 'Fraunhofer-Institut für Produktionsanlagen und Konstruktionstechnik',
+      period: 'June 2021 – September 2021',
+      location: 'Berlin, Germany',
+      description: '',
+      achievements: [
+        'Maintained and enhanced a Progressive Web App using Vue.js, .NET Entity Framework, and MS SQL Server',
+        'Developed a data cleaning script in Python for preparing machine learning data'
       ]
     }
   ]
@@ -26,8 +37,7 @@ export default function ExperienceSection() {
       location: 'Berlin, Germany',
       description: '',
       achievements: [
-        'Specialization: Game Technology & Interactive Systems and Web Technology',
-        'Master\'s Thesis: Research and evaluation of the use of Large Language Models and graph databases for the development of agentic systems in Unity, utilizing LangChain / LangGraph and Neo4j'
+        'Specialization: Game Technology & Interactive Systems and Web Technology'
       ]
     },
     {
@@ -37,8 +47,7 @@ export default function ExperienceSection() {
       location: 'Berlin, Germany',
       description: '',
       achievements: [
-        'Specialization: Game Technology & Interactive Systems and Visual Computing',
-        'Bachelor\'s Thesis: Design and integration of a hardware-accelerated path tracing engine into an open-source video game, using Vulkan in the C programming language to enable real-time graphics rendering'
+        'Specialization: Game Technology & Interactive Systems and Visual Computing'
       ]
     }
   ]

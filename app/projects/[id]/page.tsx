@@ -30,15 +30,20 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
     notFound()
   }
 
+  // Redirect if project has no full article
+  if (!('description' in project) || !project.description) {
+    notFound()
+  }
+
   // Helper function to extract sections from description
   const extractSection = (text: string, sectionTitle: string): string[] => {
     const lines = text.split('\n')
-    const sectionIndex = lines.findIndex(line => 
+    const sectionIndex = lines.findIndex(line =>
       line.toLowerCase().includes(sectionTitle.toLowerCase())
     )
-    
+
     if (sectionIndex === -1) return []
-    
+
     const sectionLines = []
     for (let i = sectionIndex + 1; i < lines.length; i++) {
       const line = lines[i].trim()
@@ -158,7 +163,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
         <section className="mb-12">
           <div className="markdown-content text-gray-700 leading-relaxed">
             {(() => {
-              let content = project.description
+              let content = project.description!
 
               // Replace gallery markers with placeholders, then render
               content = content

@@ -3,10 +3,10 @@ export const projectsData = {
     id: 'masters-thesis',
     title: 'Master\'s Thesis: Research and Evaluation of Large Language Models and Graph Databases for Agentic Systems in Unity',
     subtitle: 'Thesis',
-    year: 'February 21, 2025',
+    year: 'October 2024 - February 2025',
     category: 'thesis',
     technologies: ['Unity', 'LangChain', 'LangGraph', 'Neo4j'],
-    languages: ['C#', 'Python'],
+    languages: ['C#', 'Python', 'Cypher'],
     summary: 'In this master thesis, I explored integrating LLM-based function-calling agents into Unity game environments using a Neo4j knowledge graph and LangGraph agent framework. Despite relatively low overall success rates and notable latency concerns limiting practical real-time integration, the evaluation validated the architectural approach with high partial success rates for multi-step function calls, demonstrating the feasibility of the concept.',
     description: `# From Natural Language Request to Method Call: Building Function-Calling Agents in Unity
 
@@ -80,9 +80,9 @@ While unsuitable for real-time gameplay today, this architecture proves that nat
     id: 'quake-path-tracing',
     title: 'Bachelor Thesis: Implementing a Hardware-Accelerated Path Tracing Renderer in \'Quake\'',
     subtitle: 'Thesis',
-    year: 'March 4, 2022',
+    year: 'October 2021 - March 2022',
     category: 'thesis',
-    technologies: ['Vulkan', 'NVIDIA RTX'],
+    technologies: ['Vulkan'],
     languages: ['C', 'GLSL'],
     summary: 'In this bachelor thesis, I explored the feasibility of integrating a hardware-accelerated path tracing renderer into a retro video game using Vulkan ray tracing extensions. The thesis examined both technical and conceptual challenges inherent to such an integration. I successfully implemented a Monte Carlo path tracer in the game "Quake" that achieved physically accurate lighting calculations while maintaining acceptable frame rates.',
     description: `# Implementing a Hardware-Accelerated Path Tracing Renderer in 'Quake'
@@ -155,10 +155,10 @@ The biggest weakness of this naive approach appeared in scenes with small or spa
     id: 'llm-conversation-framework',
     title: 'LLM-Based Conversation Framework for Interactive Game Environments',
     subtitle: 'Personal Project',
-    year: 'October 2025',
+    year: 'October 2024 - Ongoing',
     category: 'hobby',
-    technologies: ['Unity', 'LangGraph', 'OWL 2', 'GraphDB'],
-    languages: ['C#', 'Python'],
+    technologies: ['Unity', 'LangChain', 'LangGraph', 'OWL/RDF', 'Ontotext GraphDB'],
+    languages: ['C#', 'Python', 'SPARQL'],
     summary: 'In this ongoing personal project, I am developing a conversation framework for believable NPCs in interactive game environments. Building on insights from my master thesis, this project combines an OWL 2-compliant ontology for personality and memory representation with a LangGraph-based agent system, enabling NPCs to maintain consistent personalities, remember past interactions, and generate context-aware dialogue while controlling game actions.',
     description: `# LLM-Based Conversation Framework for Interactive Game Environments
 
@@ -177,11 +177,22 @@ Building on insights from my master's thesis, this ongoing personal project expl
 This project is actively under development. The focus lies on creating NPCs that maintain personality consistency across conversations, remember past interactions, and react appropriately to changing game states by combining semantic web technologies with modern LLM agent frameworks.`,
     links: {}
   },
+  'quake-rtx-remix': {
+    id: 'quake-rtx-remix',
+    title: 'Modification of "Quake" using RTX Remix',
+    subtitle: 'Academic Coursework',
+    year: 'October 2023 - April 2024',
+    category: 'coursework',
+    technologies: ['NVIDIA RTX Remix'],
+    languages: ['C++'],
+    summary: 'Evaluated NVIDIA RTX Remix for retrofitting path tracing into classic Quake, comparing automated tools vs manual implementation. Conducted compatibility analysis across 8 different Quake engines and API wrappers (DirectX8/9, OpenGL).',
+    links: {}
+  },
   'coursework-project-2': {
     id: 'coursework-project-2',
     title: 'Simulation of Reprojection Techniques as Shader in Unity',
     subtitle: 'Academic Coursework',
-    year: 'September 20, 2023',
+    year: 'April 2023 - September 2023',
     category: 'coursework',
     technologies: ['Unity'],
     languages: ['C#', 'HLSL'],
@@ -241,14 +252,40 @@ Current limitations of reprojection techniques center primarily on occlusion han
       github: 'https://github.com/Ruslando/ReprojectionExamples'
     }
   },
+  'somethinar': {
+    id: 'somethinar',
+    title: 'IMI Showtime - Somethin.AR (Master)',
+    subtitle: 'University Project',
+    year: 'October 2023 - February 2024',
+    category: 'university',
+    technologies: ['Unity', 'Meta XR SDK', 'Photon', 'Meta XR Colocation API'],
+    languages: ['C#'],
+    summary: 'Development of a mixed reality multiplayer game using Unity and the Meta XR SDK. Primarily responsible for implementing networking with Photon and colocation functionality using the Meta XR Colocation API.',
+    links: {
+      showtime: 'https://showtime.f4.htw-berlin.de/ws23/master/m1-somethinar/'
+    }
+  },
+  'vamx': {
+    id: 'vamx',
+    title: 'IMI Showtime - VamX (Master)',
+    subtitle: 'University Project',
+    year: 'April 2023 - August 2023',
+    category: 'university',
+    technologies: ['Unity', 'FMOD', 'Virtual Reality'],
+    languages: ['C#'],
+    summary: 'Conception and implementation of a virtual reality experience to analyze the influence of audio manipulations on user behavior. Primarily responsible for developing and integrating real-time audio manipulation tools in the Unity Editor using FMOD.',
+    links: {
+      showtime: 'https://showtime.f4.htw-berlin.de/ss23/master/m6-vamx/'
+    }
+  },
   'anaphylaxis-app': {
     id: 'anaphylaxis-app',
-    title: 'IMI Showtime - B1: Anaphylaxis App',
+    title: 'IMI Showtime - Anaphylaxis App (Bachelor)',
     subtitle: 'University Project',
     year: 'October 2019 - February 2020',
     category: 'university',
-    technologies: ['Android', 'Room Database'],
-    languages: ['Kotlin'],
+    technologies: ['Android', 'Room Database', 'RxJava'],
+    languages: ['Java', 'SQL'],
     summary: 'Implemented a native Android app to improve first aid for anaphylactic shocks in children. Responsible for building the database using Android Room.',
     links: {}
   }
