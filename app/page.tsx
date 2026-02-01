@@ -158,12 +158,12 @@ export default function Home() {
                 </div>
 
                 <div className="relative w-72 h-72 shrink-0 group">
-                  <div className="absolute -inset-4 bg-blue-200 rounded-[2.5rem] rotate-6 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-105"></div>
+                  <div className="absolute -inset-4 bg-blue-200 rounded-3xl rotate-6 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-105"></div>
                   <Image
                     src="/profile.jpeg"
                     alt="Ruslan Novikov"
                     fill
-                    className="object-cover rounded-[2rem] shadow-2xl relative z-10"
+                    className="object-cover rounded-2xl shadow-2xl relative z-10"
                     priority
                   />
                 </div>
@@ -198,7 +198,7 @@ export default function Home() {
           <div className="inline-block p-4 rounded-full bg-blue-100 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 mb-6">
             <FaEnvelope className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6 tracking-tight">Let's Connect</h2>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Let's Connect</h2>
           <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
             I'm always interested in new opportunities and collaborations. Feel free to reach out!
           </p>

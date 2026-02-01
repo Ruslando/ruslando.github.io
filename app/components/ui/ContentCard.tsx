@@ -61,8 +61,8 @@ export function ContentCard({
 
   const CardWrapper = ({ children: cardChildren }: { children: ReactNode }) => {
     const baseClasses = compact
-      ? `border bg-white rounded-lg p-3 transition-all duration-200 hover:shadow-md text-sm ${colorMap[type]}`
-      : `border bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-lg ${colorMap[type]}`
+      ? `border bg-white rounded-xl p-4 shadow-sm transition-all duration-300 hover:shadow-lg text-sm ${colorMap[type]}`
+      : `border bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-lg ${colorMap[type]}`
     
     if (interactive && href) {
       return (
@@ -107,7 +107,7 @@ export function ContentCard({
         >
           <div className="flex items-start justify-between w-full min-w-0">
             <div className="flex-1 min-w-0 mr-3">
-              <h3 className={compact ? "text-sm font-medium text-gray-900 leading-tight text-left" : "text-lg font-medium text-gray-900 leading-tight text-left"}>
+              <h3 className={compact ? "text-sm font-bold text-gray-900 leading-tight text-left" : "text-lg font-bold text-gray-900 leading-tight text-left"}>
                 {hasDetailPage ? (
                   <Link
                     href={href}
@@ -136,7 +136,7 @@ export function ContentCard({
                 {date || year || period}
               </span>
               <FaChevronDown
-                className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transition-all duration-300 flex-shrink-0 ${
+                className={`w-5 h-5 text-gray-600 transition-all duration-300 flex-shrink-0 ${
                   isExpanded ? 'rotate-180' : isHovered ? 'translate-y-0.5' : ''
                 }`}
               />
@@ -151,7 +151,7 @@ export function ContentCard({
           <div className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-blue-900/50 via-blue-700/25 to-transparent pointer-events-none z-10 transition-opacity duration-300 ${
             isHovered && !isExpanded ? 'opacity-100' : 'opacity-0'
           }`} />
-          <div className={compact ? 'px-3 pb-3' : 'px-6 pb-6'}>
+          <div className={compact ? 'px-4 pb-4' : 'px-6 pb-6'}>
             {/* Metadata based on type */}
             {authors && (
               <p className="text-gray-600 mb-2 text-sm">
@@ -206,13 +206,13 @@ export function ContentCard({
             )}
 
             {/* Content */}
-            <div className={compact ? 'text-gray-700 leading-tight mb-2 text-sm' : 'text-gray-700 leading-relaxed mb-4'}>
+            <div className={compact ? 'text-gray-700 leading-tight mb-2 text-sm' : 'text-gray-700 leading-relaxed mb-3'}>
               {children}
             </div>
 
             {/* Achievements for experience */}
             {achievements && achievements.length > 0 && (
-              <ul className="text-sm text-gray-600 space-y-1 mb-4">
+              <ul className="text-sm text-gray-600 space-y-1 mb-3">
                 {achievements.map((achievement, i) => (
                   <li key={i}>• {achievement}</li>
                 ))}
@@ -227,7 +227,7 @@ export function ContentCard({
   return (
     <CardWrapper>
       <div className="flex items-start justify-between mb-3">
-        <h3 className="text-lg font-medium text-gray-900 leading-tight">
+        <h3 className="text-lg font-bold text-gray-900 leading-tight">
           <TitleComponent>{title}</TitleComponent>
         </h3>
         <span className="text-sm text-gray-500 ml-4 whitespace-nowrap">
@@ -289,13 +289,13 @@ export function ContentCard({
       )}
 
       {/* Content */}
-      <div className="text-gray-700 leading-relaxed mb-4">
+      <div className="text-gray-700 leading-relaxed mb-3">
         {children}
       </div>
 
       {/* Achievements for experience */}
       {achievements && achievements.length > 0 && (
-        <ul className="text-sm text-gray-600 space-y-1 mb-4">
+        <ul className="text-sm text-gray-600 space-y-1 mb-3">
           {achievements.map((achievement, i) => (
             <li key={i}>• {achievement}</li>
           ))}

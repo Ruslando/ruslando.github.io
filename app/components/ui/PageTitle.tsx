@@ -6,7 +6,7 @@ interface PageTitleProps {
 export function PageTitle({ children, subtitle }: PageTitleProps) {
   return (
     <div>
-      <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 text-gray-900 tracking-tight">
+      <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-gray-900 tracking-tight dark:text-gray-100">
         {children}
       </h1>
       {subtitle && (

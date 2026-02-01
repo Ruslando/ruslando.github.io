@@ -114,7 +114,7 @@ export default function ProjectsSection() {
         <button
           onClick={scrollPrev}
           aria-label="Scroll previous projects"
-          className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 h-10 w-10 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 h-10 w-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition"
         >
           ‹
         </button>
@@ -131,7 +131,7 @@ export default function ProjectsSection() {
             const imageSrc = (project as Project & { image?: string }).image ?? '/bachelor_thesis/quake_bild.png'
 
             const Card = (
-              <article className="group w-72 sm:w-80 md:w-96 h-[420px] flex-shrink-0 snap-start rounded-2xl bg-white shadow-sm hover:shadow-lg dark:hover:shadow-[0_0_25px_rgba(37,99,235,0.25)] transition flex flex-col overflow-hidden">
+              <article className="group w-72 sm:w-80 md:w-96 h-[420px] flex-shrink-0 snap-start rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl dark:hover:shadow-[0_0_25px_rgba(37,99,235,0.25)] transition-all duration-300 flex flex-col overflow-hidden">
                 <div className="relative h-40 sm:h-44 w-full bg-gray-100 dark:bg-gray-800 flex-shrink-0 overflow-hidden">
                   <Image
                     src={imageSrc}
@@ -166,12 +166,12 @@ export default function ProjectsSection() {
                 </div>
 
                 <div className="flex-1 p-6 flex flex-col min-h-0">
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {project.title}
                   </h3>
 
                   {project.card_description && (
-                    <p className="mt-3 text-sm text-gray-600 line-clamp-3">
+                    <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
                       {project.card_description}
                     </p>
                   )}
@@ -197,7 +197,7 @@ export default function ProjectsSection() {
                         className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <FaExternalLinkAlt className="w-3 h-3" />
+                        <FaExternalLinkAlt className="w-3.5 h-3.5" />
                         <span className="font-medium">Project Page</span>
                       </a>
                     ) : project.links?.website && (
@@ -208,7 +208,7 @@ export default function ProjectsSection() {
                         className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <FaExternalLinkAlt className="w-3 h-3" />
+                        <FaExternalLinkAlt className="w-3.5 h-3.5" />
                         <span className="font-medium">Website</span>
                       </a>
                     )}
@@ -262,7 +262,7 @@ export default function ProjectsSection() {
         <button
           onClick={scrollNext}
           aria-label="Scroll next projects"
-          className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 h-10 w-10 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+          className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 h-10 w-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition"
         >
           ›
         </button>

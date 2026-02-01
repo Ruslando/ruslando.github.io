@@ -42,12 +42,12 @@ interface TimelineItemProps {
 }
 
 const TimelineItem = ({ title, subtitle, period, location, description, technologies, languages, isExpanded, onToggle }: TimelineItemProps) => (
-  <div className="relative pl-8 pb-12 last:pb-0 group">
+  <div className="relative pl-8 pb-8 last:pb-0 group">
     {/* Line */}
     <div className="absolute left-[11px] top-[4px] bottom-0 w-[2px] bg-gray-200 dark:bg-gray-800 group-last:bg-transparent" />
     
     {/* Dot */}
-    <div className="absolute left-[4px] top-[6px] w-4 h-4 rounded-full border-[3px] border-white dark:border-gray-900 bg-blue-500 dark:bg-blue-400 shadow-sm" />
+    <div className="absolute left-[4px] top-[6px] w-4 h-4 rounded-full border-[3px] border-white dark:border-gray-900 bg-blue-600 dark:bg-blue-400 shadow-sm" />
     
     <button
       onClick={onToggle}
@@ -58,14 +58,14 @@ const TimelineItem = ({ title, subtitle, period, location, description, technolo
           <h3 className="text-lg font-bold text-gray-900 font-display break-words">{title}</h3>
         </div>
         {onToggle && (
-          <FaChevronDown className={`w-4 h-4 text-gray-600 transition-transform duration-300 shrink-0 ${isExpanded ? 'rotate-180' : ''}`} />
+          <FaChevronDown className={`w-5 h-5 text-gray-600 transition-transform duration-300 shrink-0 ${isExpanded ? 'rotate-180' : ''}`} />
         )}
       </div>
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-1">
-        <div className="text-slate-700 dark:text-slate-200 font-medium">{subtitle}</div>
+        <div className="text-gray-700 dark:text-gray-200 font-medium">{subtitle}</div>
         <span className="text-sm font-medium text-gray-400 shrink-0 font-mono">{period}</span>
       </div>
-      {location && <div className="text-xs text-gray-400 uppercase tracking-wider">{location}</div>}
+      {location && <div className="text-xs text-gray-400 uppercase tracking-widest">{location}</div>}
     </button>
 
     <div
@@ -78,12 +78,12 @@ const TimelineItem = ({ title, subtitle, period, location, description, technolo
       <div className="pt-0 overflow-hidden">
         {languages && languages.length > 0 && (
           <div className="mb-3">
-            <div className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold mb-2">Languages</div>
+            <div className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-2">Languages</div>
             <div className="flex flex-wrap gap-2">
               {languages.map((lang, idx) => (
                 <span 
                   key={idx}
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800/70 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800/70 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
                 >
                   {getTechIcon(lang)}
                   {lang}
@@ -95,12 +95,12 @@ const TimelineItem = ({ title, subtitle, period, location, description, technolo
 
         {technologies && technologies.length > 0 && (
           <div className="mb-4">
-            <div className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold mb-2">Technologies</div>
+            <div className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-2">Technologies</div>
             <div className="flex flex-wrap gap-2">
               {technologies.map((tech, idx) => (
                 <span 
                   key={idx}
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 dark:bg-slate-800/70 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-700 dark:bg-gray-800/70 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
                 >
                   {getTechIcon(tech)}
                   {tech}
