@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FaBriefcase, FaGraduationCap, FaDatabase, FaChevronDown, FaCubes, FaPlug, FaJava } from 'react-icons/fa'
-import { SiVuedotjs, SiDotnet, SiPython, SiGraphql, SiNeo4J, SiDocker, SiJavascript, SiSpring } from 'react-icons/si'
+import { SiVuedotjs, SiDotnet, SiPython, SiGraphql, SiNeo4J, SiDocker, SiJavascript, SiSpring, SiWikidata, SiPytorch, SiJupyter } from 'react-icons/si'
 import { DiMsqlServer } from 'react-icons/di'
 import { SectionHeader } from './ui/SectionHeader'
 
@@ -25,6 +25,10 @@ const getTechIcon = (tech: string) => {
     'Docker': <SiDocker className="w-3.5 h-3.5" />,
     'Spring Boot': <SiSpring className="w-3.5 h-3.5" />,
     'Automerge': <FaCubes className="w-3.5 h-3.5" />,
+    'SPARQL': <SiWikidata className="w-3.5 h-3.5" />,
+    'Cypher': <SiNeo4J className="w-3.5 h-3.5" />,
+    'PyTorch': <SiPytorch className="w-3.5 h-3.5" />,
+    'Jupyter': <SiJupyter className="w-3.5 h-3.5" />,
   }
   return iconMap[tech] || null
 }
@@ -35,13 +39,13 @@ interface TimelineItemProps {
   period: string
   location?: string
   description?: string[]
-  technologies?: string[]
-  languages?: string[]
+  descriptionStyle?: 'list' | 'lines'
+  skillGroups?: { label: string; items: string[] }[]
   isExpanded?: boolean
   onToggle?: () => void
 }
 
-const TimelineItem = ({ title, subtitle, period, location, description, technologies, languages, isExpanded, onToggle }: TimelineItemProps) => (
+const TimelineItem = ({ title, subtitle, period, location, description, descriptionStyle = 'list', skillGroups, isExpanded, onToggle }: TimelineItemProps) => (
   <div className="relative pl-8 pb-8 last:pb-0 group">
     {/* Line */}
     <div className="absolute left-[11px] top-[4px] bottom-0 w-[2px] bg-gray-200 dark:bg-gray-800 group-last:bg-transparent" />
@@ -62,7 +66,7 @@ const TimelineItem = ({ title, subtitle, period, location, description, technolo
         )}
       </div>
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-1">
-        <div className="text-gray-700 dark:text-gray-200 font-medium">{subtitle}</div>
+        <div className="text-gray-700 font-medium">{subtitle}</div>
         <span className="text-sm font-medium text-gray-400 shrink-0 font-mono">{period}</span>
       </div>
       {location && <div className="text-xs text-gray-400 uppercase tracking-widest">{location}</div>}
@@ -76,47 +80,40 @@ const TimelineItem = ({ title, subtitle, period, location, description, technolo
       }}
     >
       <div className="pt-0 overflow-hidden">
-        {languages && languages.length > 0 && (
-          <div className="mb-3">
-            <div className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-2">Languages</div>
-            <div className="flex flex-wrap gap-2">
-              {languages.map((lang, idx) => (
-                <span 
-                  key={idx}
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800/70 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
-                >
-                  {getTechIcon(lang)}
-                  {lang}
-                </span>
+        {description && description.length > 0 && (
+          descriptionStyle === 'lines' ? (
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-3 whitespace-pre-line">
+              {description.join('\n')}
+            </p>
+          ) : description.length === 1 ? (
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-3">{description[0]}</p>
+          ) : (
+            <ul className="list-disc ml-4 space-y-2 text-gray-600 dark:text-gray-400 text-sm leading-relaxed marker:text-gray-300 mb-3">
+              {description.map((item, idx) => (
+                <li key={idx}>{item}</li>
               ))}
-            </div>
-          </div>
+            </ul>
+          )
         )}
 
-        {technologies && technologies.length > 0 && (
-          <div className="mb-4">
-            <div className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-2">Technologies</div>
-            <div className="flex flex-wrap gap-2">
-              {technologies.map((tech, idx) => (
-                <span 
-                  key={idx}
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-700 dark:bg-gray-800/70 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
-                >
-                  {getTechIcon(tech)}
-                  {tech}
-                </span>
-              ))}
+        {skillGroups && skillGroups.length > 0 && skillGroups.map((group) => (
+          group.items.length > 0 && (
+            <div key={group.label} className="mb-3 last:mb-0">
+              <div className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-2">{group.label}</div>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((item, idx) => (
+                  <span 
+                    key={`${group.label}-${idx}`}
+                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-700 dark:bg-gray-800/70 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
+                  >
+                    {getTechIcon(item)}
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-        
-        {description && description.length > 0 && (
-          <ul className="list-disc ml-4 space-y-2 text-gray-600 dark:text-gray-400 text-sm leading-relaxed marker:text-gray-300">
-            {description.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
-        )}
+          )
+        ))}
       </div>
     </div>
   </div>
@@ -133,11 +130,12 @@ export default function ExperienceSection() {
       period: '10/2021 – 09/2025',
       location: 'Berlin, Germany',
       description: [
-        'Added real-time collaboration features using WebSockets and CRDTs (SignalR, Automerge) to a Progressive Web App (Vue.js)',
-        'Designed and implemented an OWL-compliant ontology for the structured management of internal datasets using Protégé and GraphDB'
+        'Four years of experience as a web developer maintaining and enhancing a Progressive Web App for collaborative dataflow design and analysis. Moreover, designed and developed OWL-compliant ontologies and database schemas for structured data management.'
       ],
-      languages: ['Python', 'C#', 'JavaScript', 'SQL', 'Java'],
-      technologies: ['Vue.js', '.NET EF', 'Neo4j', 'GraphDB', 'Docker', 'MS SQL Server', 'Automerge', 'Spring Boot']
+      skillGroups: [
+        { label: 'Languages', items: ['Python', 'C#', 'Java', 'JavaScript', 'SQL', 'SPARQL', 'Cypher'] },
+        { label: 'Technologies & Tools', items: ['Vue.js', 'Entity Framework', 'Automerge', 'Spring Boot', 'GraphDB', 'Neo4j', 'Docker', 'MS SQL Server'] }
+      ]
     },
     {
       title: 'Software Developer (Intern)',
@@ -145,11 +143,12 @@ export default function ExperienceSection() {
       period: '06/2021 – 09/2021',
       location: 'Berlin, Germany',
       description: [
-        'Maintenance and development of a Progressive Web App using Vue.js, .NET Entity Framework and MS SQL Server',
-        'Development of a data-preparation script in Python for preparing machine learning datasets'
+        'Supported maintenance and feature development of a Vue.js/.NET Entity Framework Progressive Web App while creating data-preparation tooling in Python for machine learning pipelines.'
       ],
-      languages: ['Python', 'C#', 'JavaScript', 'SQL'],
-      technologies: ['Vue.js', 'Entity Framework', 'SQL Server']
+      skillGroups: [
+        { label: 'Languages', items: ['Python', 'C#', 'JavaScript', 'SQL'] },
+        { label: 'Technologies & Tools', items: ['Vue.js', 'Entity Framework', 'PyTorch', 'Jupyter', 'SQL Server'] }
+      ]
     }
   ]
 
@@ -159,14 +158,20 @@ export default function ExperienceSection() {
       subtitle: 'HTW Berlin - International Media and Computing',
       period: '10/2022 – 05/2025',
       location: 'Berlin, Germany',
-      description: []
+      description: [
+        'Specialized in semantic web technologies, VR applications, and Gen AI technologies. Wrote a master thesis on RAG-based agent development in interactive environments.',
+        'Final grade: 1.7 (120 ECTS points).'
+      ]
     },
     {
       title: 'Bachelor of Science',
       subtitle: 'HTW Berlin - International Media and Computing',
       period: '04/2018 – 04/2022',
       location: 'Berlin, Germany',
-      description: []
+      description: [
+        'Specialized in game development, engine development, and graphics programming. Wrote a bachelor thesis in computer graphics implementing a path-tracing rendering engine in a retro video game.',
+        'Final grade: 1.7 (180 ECTS points).'
+      ]
     }
   ]
 
@@ -205,6 +210,7 @@ export default function ExperienceSection() {
             <TimelineItem 
               key={index} 
               {...item}
+              descriptionStyle="lines"
               isExpanded={expandedEducation === index}
               onToggle={() => setExpandedEducation(expandedEducation === index ? null : index)}
             />

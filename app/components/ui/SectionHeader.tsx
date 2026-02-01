@@ -7,7 +7,7 @@ export function SectionHeader({ children, description }: SectionHeaderProps) {
   return (
     <div className="mb-8">
       <div className="relative">
-        <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-gray-100 pl-4">
+        <h2 className="text-2xl font-display font-bold text-gray-900 pl-4">
           {children}
         </h2>
         <div className="absolute -left-2 top-0 w-1 h-8 bg-gradient-to-b from-blue-600 to-blue-700 rounded-full"></div>

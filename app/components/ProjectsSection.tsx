@@ -4,10 +4,10 @@ import { useMemo, useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
-import { projectsData } from '../data/projects'
+import { projectsData, type Project } from '../data/projects'
 import { SectionHeader } from './ui/SectionHeader'
 
-type Project = (typeof projectsData)[keyof typeof projectsData]
+
 
 const categoryLabel: Record<Project['category'], string> = {
   thesis: 'Thesis',
@@ -39,7 +39,7 @@ export default function ProjectsSection() {
 
     return Object.values(projectsData)
       .slice()
-      .sort((a, b) => toSortValue(b.year) - toSortValue(a.year))
+      .sort((a, b) => toSortValue(b.year) - toSortValue(a.year)) as Project[]
   }, [])
 
   const trackRef = useRef<HTMLDivElement | null>(null)
@@ -77,12 +77,16 @@ export default function ProjectsSection() {
         if (stepPx > 0) step = stepPx
       }
 
-      const visibleCount = Math.max(1, Math.round(container.clientWidth / step))
-      const pages = Math.max(1, Math.ceil(children.length / visibleCount))
+      const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth)
+      const pages = Math.max(1, Math.floor(maxScroll / step) + 1)
       setTotalPages(pages)
 
-      const pageWidth = step * visibleCount
-      const page = Math.min(pages - 1, Math.max(0, Math.round(container.scrollLeft / pageWidth)))
+      if (pages === 1 || maxScroll === 0) {
+        setActivePage(0)
+        return
+      }
+
+      const page = Math.min(pages - 1, Math.max(0, Math.round(container.scrollLeft / step)))
       setActivePage(page)
     }
 
@@ -106,7 +110,7 @@ export default function ProjectsSection() {
 
   return (
     <div className="space-y-8">
-      <SectionHeader description="A curated selection of my hands-on projects.">
+      <SectionHeader description="A curated selection of some of my highlight projects.">
         Portfolio
       </SectionHeader>
 
@@ -166,7 +170,7 @@ export default function ProjectsSection() {
                 </div>
 
                 <div className="flex-1 p-6 flex flex-col min-h-0">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {project.title}
                   </h3>
 
@@ -285,9 +289,15 @@ export default function ProjectsSection() {
                 const stepPx = second.offsetLeft - first.offsetLeft
                 if (stepPx > 0) step = stepPx
               }
-              const visibleCount = Math.max(1, Math.round(container.clientWidth / step))
-              const pageWidth = step * visibleCount
-              container.scrollTo({ left: index * pageWidth, behavior: 'smooth' })
+              const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth)
+              const pages = Math.max(1, Math.floor(maxScroll / step) + 1)
+              if (pages <= 1) {
+                container.scrollTo({ left: 0, behavior: 'smooth' })
+                return
+              }
+
+              const target = Math.min(index * step, maxScroll)
+              container.scrollTo({ left: target, behavior: 'smooth' })
             }}
             className={`h-2.5 w-6 rounded-full transition-all cursor-pointer ${index === activePage ? 'bg-blue-600' : 'bg-gray-300'}`}
             aria-label={`Go to page ${index + 1}`}

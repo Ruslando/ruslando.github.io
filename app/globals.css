@@ -3,11 +3,6 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
-  /* Font Families */
-  --font-display: var(--font-sans);      /* Plus Jakarta Sans */
-  --font-body: var(--font-sans);         /* Plus Jakarta Sans */
-  --font-mono: var(--font-mono);         /* JetBrains Mono */
-
   /* --- LIGHT THEME (Default) --- */
   /* Backgrounds */
   --bg-main: #ffffff;
@@ -99,6 +94,7 @@
   body {
     background-color: var(--bg-main);
     color: var(--text-main);
+    font-family: var(--font-body);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -133,6 +129,9 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+  .font-mono { font-family: var(--font-mono); }
 }
 
 /* Gallery Styles (Preserved but mapped to vars) */

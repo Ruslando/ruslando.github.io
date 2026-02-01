@@ -35,7 +35,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
     notFound()
   }
 
-  const mastersLayoutVariant: 'split' | 'timeline' = 'split'
+  const mastersLayoutVariant: string = 'split'
 
   const buildTextSections = (content: string) => {
     const lines = content.split('\n')

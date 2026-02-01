@@ -1,20 +1,21 @@
 import './globals.css'
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
+import { Sora, Space_Grotesk, Space_Mono } from 'next/font/google'
 
-const jakarta = Plus_Jakarta_Sans({
+const sora = Sora({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-sans',
+  variable: '--font-body',
 })
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-display',
 })
 
-const jetbrainsMono = JetBrains_Mono({
+const jetbrainsMono = Space_Mono({
   subsets: ['latin'],
+  weight: ['400', '700'],
   display: 'swap',
   variable: '--font-mono',
 })
@@ -45,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${sora.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

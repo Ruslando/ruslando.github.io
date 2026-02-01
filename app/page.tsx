@@ -1,15 +1,10 @@
 'use client'
 
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import TabNavigation from './components/TabNavigation'
-import TechnologiesSection from './components/TechnologiesSection'
-/* Temporarily disabled - rendering single-scroll sections instead */
-// import PublicationsSection from './components/PublicationsSection'
 import ProjectsSection from './components/ProjectsSection'
 import ExperienceSection from './components/ExperienceSection'
-import WritingSection from './components/WritingSection'
 import { PageTitle } from './components/ui/PageTitle'
 import { SectionHeader } from './components/ui/SectionHeader'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
@@ -26,7 +21,6 @@ const sections = [
 
 export default function Home() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const scrollRef = useRef<HTMLElement | null>(null)
   const [activeSection, setActiveSection] = useState('intro')
 
@@ -62,13 +56,14 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const tabParam = searchParams.get('tab')
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const tabParam = params.get('tab')
     if (!tabParam) return
-    const params = new URLSearchParams(searchParams.toString())
     params.delete('tab')
     const qs = params.toString()
     router.replace(qs ? `/?${qs}` : '/', { scroll: false })
-  }, [searchParams, router])
+  }, [router])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -106,7 +101,7 @@ export default function Home() {
             <div className="block md:hidden text-center">
               <div className="relative w-40 h-40 mx-auto mb-8">
                 <Image
-                  src="/profile.jpeg"
+                  src="/profile2.jpeg"
                   alt="Ruslan Novikov"
                   fill
                   className="object-cover rounded-full shadow-xl border-4 border-white"
@@ -160,7 +155,7 @@ export default function Home() {
                 <div className="relative w-72 h-72 shrink-0 group">
                   <div className="absolute -inset-4 bg-blue-200 rounded-3xl rotate-6 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-105"></div>
                   <Image
-                    src="/profile.jpeg"
+                    src="/profile2.jpeg"
                     alt="Ruslan Novikov"
                     fill
                     className="object-cover rounded-2xl shadow-2xl relative z-10"
@@ -198,14 +193,14 @@ export default function Home() {
           <div className="inline-block p-4 rounded-full bg-blue-100 border border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 mb-6">
             <FaEnvelope className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Let's Connect</h2>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6 tracking-tight">Let's Connect</h2>
           <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
             I'm always interested in new opportunities and collaborations. Feel free to reach out!
           </p>
           
           <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
             <a 
-              href="mailto:ruslan.novikov@hotmail.de" 
+              href="mailto:ruslannov98@gmail.com" 
               className="min-w-[200px] flex items-center justify-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-1 group"
             >
               <FaEnvelope className="w-5 h-5 group-hover:scale-110 transition-transform" />
