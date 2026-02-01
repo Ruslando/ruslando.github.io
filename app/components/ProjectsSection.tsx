@@ -1,68 +1,300 @@
 'use client'
 
+import { useMemo, useRef, useEffect, useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { projectsData } from '../data/projects'
 import { SectionHeader } from './ui/SectionHeader'
-import { ContentCard } from './ui/ContentCard'
+
+type Project = (typeof projectsData)[keyof typeof projectsData]
+
+const categoryLabel: Record<Project['category'], string> = {
+  thesis: 'Thesis',
+  coursework: 'Coursework',
+  university: 'University',
+  hobby: 'Personal'
+}
+
+const detailPageMap: Record<string, string> = {
+  'masters-thesis': '/projects/masters-thesis',
+  'quake-path-tracing': '/projects/quake-path-tracing'
+}
+
+const getProjectHref = (project: Project) => {
+  if (detailPageMap[project.id]) return detailPageMap[project.id]
+  if (project.links?.github) return project.links.github
+  return undefined
+}
 
 export default function ProjectsSection() {
-  const projects = Object.values(projectsData)
-  const thesisProjects = projects.filter(p => p.category === 'thesis')
-  const courseworkProjects = projects.filter(p => p.category === 'coursework')
-  const universityProjects = projects.filter(p => p.category === 'university')
-  const hobbyProjects = projects.filter(p => p.category === 'hobby')
+  const projectsSorted = useMemo(() => {
+    const toSortValue = (year: string | undefined) => {
+      if (!year) return 0
+      if (/ongoing/i.test(year)) return 9999
+      const matches = year.match(/\b(19|20)\d{2}\b/g)
+      if (!matches?.length) return 0
+      return Number(matches[matches.length - 1])
+    }
 
-  const renderProjectGroup = (projectList: typeof projects, title: string) => (
-    <div className="space-y-6">
-      <h3 className="text-xl font-medium text-gray-800 pl-4 mb-6">{title}</h3>
-      <div className="space-y-8">
-        {projectList.map((project) => (
-          <ContentCard
-            key={project.id}
-            type="project"
-            title={project.title}
-            year={project.year}
-            technologies={project.technologies}
-            languages={project.languages}
-            interactive={project.id === 'quake-path-tracing' || project.id === 'masters-thesis'}
-            href={project.id === 'quake-path-tracing' || project.id === 'masters-thesis' ? `/projects/${project.id}` : undefined}
-            expandable={true}
-          >
-            <div className="space-y-4">
-              <div>{project.summary}</div>
-              
-              {/* External links inside the expandable content (excluding PDF and GitHub) */}
-              {Object.entries(project.links).filter(([type]) => type !== 'pdf' && type !== 'github').length > 0 && (
-                <div className="flex gap-4 text-sm">
-                  {Object.entries(project.links).filter(([type]) => type !== 'pdf' && type !== 'github').map(([type, url]) => (
-                    <a 
-                      key={type} 
-                      href={url as string}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      {type.toUpperCase()}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          </ContentCard>
-        ))}
-      </div>
-    </div>
-  )
+    return Object.values(projectsData)
+      .slice()
+      .sort((a, b) => toSortValue(b.year) - toSortValue(a.year))
+  }, [])
+
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const [activePage, setActivePage] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+
+  const scrollBy = (offset: number) => {
+    if (!trackRef.current) return
+    trackRef.current.scrollBy({ left: offset, behavior: 'smooth' })
+  }
+
+  const scrollNext = () => {
+    if (!trackRef.current) return
+    scrollBy(trackRef.current.clientWidth * 0.85)
+  }
+
+  const scrollPrev = () => {
+    if (!trackRef.current) return
+    scrollBy(-trackRef.current.clientWidth * 0.85)
+  }
+
+  useEffect(() => {
+    const container = trackRef.current
+    if (!container) return
+
+    let raf = 0
+    const update = () => {
+      const children = Array.from(container.children) as HTMLElement[]
+      if (!children.length) return
+      const first = children[0]
+      let step = first.getBoundingClientRect().width
+      if (children.length > 1) {
+        const second = children[1]
+        const stepPx = second.offsetLeft - first.offsetLeft
+        if (stepPx > 0) step = stepPx
+      }
+
+      const visibleCount = Math.max(1, Math.round(container.clientWidth / step))
+      const pages = Math.max(1, Math.ceil(children.length / visibleCount))
+      setTotalPages(pages)
+
+      const pageWidth = step * visibleCount
+      const page = Math.min(pages - 1, Math.max(0, Math.round(container.scrollLeft / pageWidth)))
+      setActivePage(page)
+    }
+
+    const onScroll = () => {
+      if (raf) cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(update)
+    }
+
+    const onResize = () => update()
+
+    update()
+    container.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      container.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [projectsSorted.length])
 
   return (
-    <div className="space-y-12">
-      <SectionHeader>
-        Projects
+    <div className="space-y-8">
+      <SectionHeader description="A curated selection of my hands-on projects.">
+        Portfolio
       </SectionHeader>
 
-      {thesisProjects.length > 0 && renderProjectGroup(thesisProjects, "Thesis")}
-      {courseworkProjects.length > 0 && renderProjectGroup(courseworkProjects, "Courseworks")}
-      {universityProjects.length > 0 && renderProjectGroup(universityProjects, "University Projects")}
-      {hobbyProjects.length > 0 && renderProjectGroup(hobbyProjects, "Personal Projects")}
+      <div className="relative">
+        <button
+          onClick={scrollPrev}
+          aria-label="Scroll previous projects"
+          className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 h-10 w-10 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+        >
+          ‹
+        </button>
+
+        <div
+          ref={trackRef}
+          className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4"
+          role="list"
+          aria-label="Projects"
+        >
+          {projectsSorted.map(project => {
+            const href = getProjectHref(project)
+            const isInternal = href?.startsWith('/')
+            const imageSrc = (project as Project & { image?: string }).image ?? '/bachelor_thesis/quake_bild.png'
+
+            const Card = (
+              <article className="group w-72 sm:w-80 md:w-96 h-[420px] flex-shrink-0 snap-start rounded-2xl bg-white shadow-sm hover:shadow-lg dark:hover:shadow-[0_0_25px_rgba(37,99,235,0.25)] transition flex flex-col overflow-hidden">
+                <div className="relative h-40 sm:h-44 w-full bg-gray-100 dark:bg-gray-800 flex-shrink-0 overflow-hidden">
+                  <Image
+                    src={imageSrc}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                  {(project.technologies?.length || project.languages?.length) && (
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                      <div className="p-4 space-y-2">
+                        {project.technologies && project.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-2 justify-center">
+                            {project.technologies.slice(0, 4).map(tech => (
+                              <span key={tech} className="text-xs rounded-full border border-[rgba(255,255,255,0.4)] text-[#ffffff] px-2 py-1 bg-white/10 backdrop-blur-sm shadow-sm">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {project.languages && project.languages.length > 0 && (
+                          <div className="flex flex-wrap gap-2 justify-center">
+                            {project.languages.slice(0, 3).map(lang => (
+                              <span key={lang} className="text-xs rounded-full border border-[rgba(255,255,255,0.4)] text-[#ffffff] px-2 py-1 bg-white/10 backdrop-blur-sm shadow-sm">
+                                {lang}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex-1 p-6 flex flex-col min-h-0">
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    {project.title}
+                  </h3>
+
+                  {project.card_description && (
+                    <p className="mt-3 text-sm text-gray-600 line-clamp-3">
+                      {project.card_description}
+                    </p>
+                  )}
+
+                  <div className="mt-auto flex items-center justify-start gap-4 text-xs text-gray-500 pt-4">
+                    {project.links?.github && (
+                      <a
+                        href={project.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaGithub className="w-3.5 h-3.5" />
+                        <span className="font-medium">GitHub</span>
+                      </a>
+                    )}
+                    {project.links?.showtime ? (
+                      <a
+                        href={project.links.showtime}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaExternalLinkAlt className="w-3 h-3" />
+                        <span className="font-medium">Project Page</span>
+                      </a>
+                    ) : project.links?.website && (
+                      <a
+                        href={project.links.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaExternalLinkAlt className="w-3 h-3" />
+                        <span className="font-medium">Website</span>
+                      </a>
+                    )}
+                    {!project.links?.github && !project.links?.showtime && !project.links?.website && (
+                      <span>{project.year}</span>
+                    )}
+                  </div>
+                </div>
+              </article>
+            )
+
+            /*
+            if (!href) {
+              return (
+                <div key={project.id} role="listitem">
+                  {Card}
+                </div>
+              )
+            }
+
+            if (isInternal) {
+              return (
+                <Link key={project.id} href={href} role="listitem" className="block">
+                  {Card}
+                </Link>
+              )
+            }
+
+            return (
+              <a
+                key={project.id}
+                href={href}
+                role="listitem"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                {Card}
+              </a>
+            )
+            */
+
+             return (
+               <div key={project.id} role="listitem">
+                 {Card}
+               </div>
+             )
+          })}
+        </div>
+
+        <button
+          onClick={scrollNext}
+          aria-label="Scroll next projects"
+          className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 h-10 w-10 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
+        >
+          ›
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center gap-3">
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => {
+              const container = trackRef.current
+              if (!container) return
+              const children = Array.from(container.children) as HTMLElement[]
+              if (!children.length) return
+              const first = children[0]
+              let step = first.getBoundingClientRect().width
+              if (children.length > 1) {
+                const second = children[1]
+                const stepPx = second.offsetLeft - first.offsetLeft
+                if (stepPx > 0) step = stepPx
+              }
+              const visibleCount = Math.max(1, Math.round(container.clientWidth / step))
+              const pageWidth = step * visibleCount
+              container.scrollTo({ left: index * pageWidth, behavior: 'smooth' })
+            }}
+            className={`h-2.5 w-6 rounded-full transition-all cursor-pointer ${index === activePage ? 'bg-blue-600' : 'bg-gray-300'}`}
+            aria-label={`Go to page ${index + 1}`}
+            aria-current={index === activePage ? 'true' : undefined}
+          />
+        ))}
+      </div>
     </div>
   )
 }

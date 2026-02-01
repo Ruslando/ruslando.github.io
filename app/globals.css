@@ -1,233 +1,156 @@
 @import "tailwindcss" source("../app/**/*.{js,ts,jsx,tsx}");
 
-/* Tailwind CSS v4 - CSS-first configuration */
-@theme {
-  --font-family-inter: var(--font-inter);
-  --font-family-crimson: var(--font-crimson);
-  --font-family-jetbrains-mono: var(--font-jetbrains-mono);
-  --font-family-sans: var(--font-inter), 'system-ui', 'sans-serif';
-  --font-family-serif: var(--font-crimson), 'Georgia', 'serif';
-  --font-family-mono: var(--font-jetbrains-mono), 'Consolas', 'Monaco', monospace;
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  /* Font Families */
+  --font-display: var(--font-sans);      /* Plus Jakarta Sans */
+  --font-body: var(--font-sans);         /* Plus Jakarta Sans */
+  --font-mono: var(--font-mono);         /* JetBrains Mono */
+
+  /* --- LIGHT THEME (Default) --- */
+  /* Backgrounds */
+  --bg-main: #ffffff;
+  --bg-surface: #ffffff; 
+  --bg-subtle: #f8fafc;  /* Slate 50 */
+  --bg-muted: #f1f5f9;   /* Slate 100 */
+
+  /* Borders */
+  --border-subtle: #e2e8f0; /* Slate 200 */
+  --border-main: #cbd5e1;   /* Slate 300 */
+
+  /* Text */
+  --text-main: #0f172a;    /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+  --text-muted: #64748b;     /* Slate 500 */
+  --text-inverse: #ffffff;
+
+  /* Brand / Primary (Professional Blue) */
+  --primary: #2563eb;       /* Blue 600 */
+  --primary-hover: #1d4ed8; /* Blue 700 */
+  --primary-light: #eff6ff; /* Blue 50 */
   
-  --color-gray-25: #fcfcfc;
-  --color-gray-50: #f8fafc;
-  --color-gray-75: #f1f5f9;
-  --color-gray-100: #e2e8f0;
-  --color-gray-200: #cbd5e1;
-  --color-gray-300: #94a3b8;
-  --color-gray-400: #64748b;
-  --color-gray-500: #475569;
-  --color-gray-600: #334155;
-  --color-gray-700: #1e293b;
-  --color-gray-800: #0f172a;
-  --color-gray-900: #020617;
-  
-  --color-blue-50: #eff6ff;
-  --color-blue-100: #dbeafe;
-  --color-blue-200: #bfdbfe;
-  --color-blue-300: #93c5fd;
-  --color-blue-400: #60a5fa;
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-  
-  --color-green-50: #f0fdf4;
-  --color-green-100: #dcfce7;
-  --color-green-200: #bbf7d0;
-  --color-green-300: #86efac;
-  --color-green-400: #4ade80;
-  
-  --color-purple-50: #faf5ff;
-  --color-purple-100: #f3e8ff;
-  --color-purple-200: #e9d5ff;
-  --color-purple-300: #d8b4fe;
-  --color-purple-400: #c084fc;
-  
-  --color-amber-50: #fffbeb;
-  --color-amber-100: #fef3c7;
-  --color-amber-200: #fde68a;
-  --color-amber-300: #fcd34d;
+  /* Utilities */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 }
 
-/* Custom styles for modern academic aesthetic */
+[data-theme='dark'] {
+  /* --- DARK THEME --- */
+  /* Backgrounds - lifted to avoid pitch-black contrast */
+  --bg-main: #0f1115;     /* Soft charcoal */
+  --bg-surface: #1a1d24;  /* Elevated surface */
+  --bg-subtle: #242833;   /* Subtle panels */
+  --bg-muted: #2f3441;    /* Muted blocks */
+
+  /* Borders */
+  --border-subtle: #27272a; /* Zinc 800 */
+  --border-main: #3f3f46;   /* Zinc 700 */
+
+  /* Text */
+  --text-main: #fafafa;     /* Zinc 50 */
+  --text-secondary: #cbd5e1; /* Slate 300 (Kept slightly cool for readability) */
+  --text-muted: #94a3b8;    /* Slate 400 */
+  --text-inverse: #09090b;
+
+  /* Brand / Primary */
+  --primary: #3b82f6;       /* Blue 500 */
+  --primary-hover: #60a5fa; /* Blue 400 */
+  --primary-light: #172554; /* Blue 950 */
+}
+
+@theme {
+  --font-family-sans: var(--font-body);
+  --font-family-display: var(--font-display);
+  --font-family-mono: var(--font-mono);
+
+  /* Map standard Tailwind colors to our semantic variables for compatibility */
+  --color-white: var(--bg-surface);
+  --color-gray-25: var(--bg-main);
+  --color-gray-50: var(--bg-subtle);
+  --color-gray-100: var(--bg-muted);
+  --color-gray-200: var(--border-subtle);
+  --color-gray-300: var(--border-main);
+  --color-gray-400: var(--text-muted);
+  --color-gray-500: var(--text-muted); /* Overlap intended */
+  --color-gray-600: var(--text-secondary);
+  --color-gray-700: var(--text-secondary); /* Overlap intended */
+  --color-gray-800: var(--text-main);
+  --color-gray-900: var(--text-main); /* Overlap intended */
+
+  --color-blue-50: var(--primary-light);
+  --color-blue-100: color-mix(in srgb, var(--primary) 15%, transparent);
+  --color-blue-200: color-mix(in srgb, var(--primary) 30%, transparent);
+  --color-blue-500: var(--primary);
+  --color-blue-600: var(--primary-hover);
+}
+
 @layer base {
   html {
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'pnum' 1, 'tnum' 0, 'onum' 0, 'lnum' 1, 'dlig' 0;
     scroll-behavior: smooth;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
-    font-family: var(--font-family-sans);
-    line-height: 1.6;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-gray-25);
-    color: var(--color-gray-800);
-    font-size: 16px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  h1 {
-    font-family: var(--font-family-serif);
-    font-weight: 600;
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'dlig' 1;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+  /* Typography refinements for "Sleek" look */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em; /* Tight tracking for modern headings */
+    color: var(--text-main);
   }
 
-  h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-    line-height: 1.4;
-    letter-spacing: -0.025em;
+  h1 { font-weight: 800; }
+  h2 { font-weight: 700; }
+  h3 { font-weight: 600; }
+
+  p {
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  /* Smooth transitions for everything */
+  *, *:before, *:after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
   }
   
-  h2 {
-    font-size: 1.875rem; /* 30px */
-    font-weight: 700;
-  }
-  
-  h3 {
-    font-size: 1.5rem; /* 24px */
-  }
-  
-  h4 {
-    font-size: 1.25rem; /* 20px */
-  }
-
-  code, pre {
-    font-family: var(--font-family-mono);
-    font-feature-settings: 'kern' 0, 'liga' 0, 'calt' 0;
-  }
-
-  /* Modern focus styles */
-  *:focus-visible {
-    outline: 2px solid var(--color-blue-500);
-    outline-offset: 2px;
-    border-radius: 4px;
+  /* Overrides for specific components to use new vars */
+  .bg-white {
+    background-color: var(--bg-surface) !important;
   }
 }
 
 @layer utilities {
-  .border-l-3 {
-    border-left-width: 3px;
-  }
-  
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  /* Modern spacing scale */
-  .space-y-12 > * + * {
-    margin-top: 3rem;
-  }
-  
-  .space-y-16 > * + * {
-    margin-top: 4rem;
-  }
-  
-  /* Markdown content styles */
-  .markdown-content h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-gray-900);
-  }
-  
-  .markdown-content h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--color-gray-800);
-  }
-  
-  .markdown-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    color: var(--color-gray-700);
-  }
-  
-  .markdown-content strong {
-    font-weight: 600;
-    color: var(--color-gray-900);
-  }
-  
-  .markdown-content p {
-    margin-bottom: 1.25rem;
-    line-height: 1.7;
-    color: var(--color-gray-700);
-  }
-  
-  .markdown-content p:first-of-type {
-    margin-top: 0;
-  }
-  
-  .markdown-content p:last-of-type {
-    margin-bottom: 0;
-  }
-  
-  /* Tab content animation */
-  .tab-content .fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  .text-balance { text-wrap: balance; }
 }
 
-/* Print styles for academic formatting */
-@media print {
-  body { 
-    font-size: 12pt; 
-    line-height: 1.6;
-  }
-  
-  .no-print {
-    display: none !important;
-  }
-  
-  a {
-    color: #000 !important;
-    text-decoration: underline;
-  }
-  
-  h1, h2, h3 {
-    break-after: avoid;
-  }
-  
-  article {
-    break-inside: avoid;
-  }
-}
-
-/* Custom styles for modern image gallery */
+/* Gallery Styles (Preserved but mapped to vars) */
 .gallery-container {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   overflow: hidden;
+  border: 1px solid var(--border-subtle);
 }
 
 .main-image-container {
   position: relative;
   width: 100%;
   height: 500px;
-  background: var(--color-gray-50);
+  background: var(--bg-subtle);
   display: flex;
   align-items: center;
 }
@@ -247,10 +170,6 @@
   transition: transform 0.3s ease;
 }
 
-.main-image-wrapper:hover .main-image {
-  transform: scale(1.02);
-}
-
 .image-overlay {
   position: absolute;
   inset: 0;
@@ -268,14 +187,15 @@
 }
 
 .overlay-text {
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a; /* Always dark text for the white pill */
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   transform: translateY(10px);
   transition: transform 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
 .main-image-wrapper:hover .overlay-text {
@@ -284,18 +204,19 @@
 
 .image-info {
   padding: 1.5rem;
-  border-top: 1px solid var(--color-gray-200);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
 }
 
 .image-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 
 .image-description {
-  color: var(--color-gray-600);
+  color: var(--text-secondary);
   font-size: 0.875rem;
   line-height: 1.5;
 }
@@ -306,81 +227,52 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 1rem 1.5rem 1.5rem;
-  background: var(--color-gray-50);
+  background: var(--bg-subtle);
 }
 
 .thumbnail {
   position: relative;
   width: 100px;
   height: 75px;
-  border-radius: 0.375rem;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   border: 2px solid transparent;
   transition: all 0.2s ease;
-  background: white;
+  background: var(--bg-surface);
   flex-shrink: 0;
 }
 
 .thumbnail:hover {
-  border-color: var(--color-blue-300);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-hover);
 }
 
 .thumbnail.active {
-  border-color: var(--color-blue-500);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  border-color: var(--primary);
 }
 
-.thumbnail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Navigation buttons */
+/* Nav Buttons */
 .nav-button {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: 50%;
+  width: 48px; 
+  height: 48px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--color-gray-300);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-gray-600);
-  transition: all 0.2s ease;
   z-index: 10;
   cursor: pointer;
 }
-
-.nav-left {
-  left: 1rem;
-}
-
-.nav-right {
-  right: 1rem;
-}
+.nav-left { left: 1rem; }
+.nav-right { right: 1rem; }
 
 .nav-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 1);
-  color: var(--color-blue-600);
-  border-color: var(--color-blue-300);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.nav-button:disabled:hover {
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--color-gray-600);
-  border-color: var(--color-gray-300);
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--bg-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

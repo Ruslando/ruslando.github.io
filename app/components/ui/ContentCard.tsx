@@ -9,6 +9,7 @@ interface ContentCardProps {
   date?: string
   year?: string
   type?: 'project' | 'publication' | 'experience' | 'writing'
+  compact?: boolean
   interactive?: boolean
   href?: string
   tags?: string[]
@@ -45,6 +46,7 @@ export function ContentCard({
   period,
   achievements,
   expandable = false,
+  compact = false,
   children
 }: ContentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -58,7 +60,9 @@ export function ContentCard({
   }
 
   const CardWrapper = ({ children: cardChildren }: { children: ReactNode }) => {
-    const baseClasses = `border bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-lg ${colorMap[type]}`
+    const baseClasses = compact
+      ? `border bg-white rounded-lg p-3 transition-all duration-200 hover:shadow-md text-sm ${colorMap[type]}`
+      : `border bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-lg ${colorMap[type]}`
     
     if (interactive && href) {
       return (
@@ -99,11 +103,11 @@ export function ContentCard({
       >
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors cursor-pointer"
+          className={compact ? "w-full p-3 flex items-center justify-between hover:bg-blue-50/50 transition-colors cursor-pointer" : "w-full p-6 flex items-center justify-between hover:bg-blue-50/50 transition-colors cursor-pointer"}
         >
           <div className="flex items-start justify-between w-full min-w-0">
             <div className="flex-1 min-w-0 mr-3">
-              <h3 className="text-lg font-medium text-gray-900 leading-tight text-left">
+              <h3 className={compact ? "text-sm font-medium text-gray-900 leading-tight text-left" : "text-lg font-medium text-gray-900 leading-tight text-left"}>
                 {hasDetailPage ? (
                   <Link
                     href={href}
@@ -117,7 +121,7 @@ export function ContentCard({
                 )}
               </h3>
               {hasDetailPage && (
-                <div className="text-left mt-1">
+                <div className={compact ? 'text-left mt-1' : 'text-left mt-1'}>
                   <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full whitespace-nowrap inline-block">
                     Article
                   </span>
@@ -128,7 +132,7 @@ export function ContentCard({
               )}
             </div>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <span className="text-sm text-gray-500 whitespace-nowrap">
+              <span className={compact ? 'text-xs text-gray-500 whitespace-nowrap' : 'text-sm text-gray-500 whitespace-nowrap'}>
                 {date || year || period}
               </span>
               <FaChevronDown
@@ -147,7 +151,7 @@ export function ContentCard({
           <div className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-blue-900/50 via-blue-700/25 to-transparent pointer-events-none z-10 transition-opacity duration-300 ${
             isHovered && !isExpanded ? 'opacity-100' : 'opacity-0'
           }`} />
-          <div className="px-6 pb-6">
+          <div className={compact ? 'px-3 pb-3' : 'px-6 pb-6'}>
             {/* Metadata based on type */}
             {authors && (
               <p className="text-gray-600 mb-2 text-sm">
@@ -202,7 +206,7 @@ export function ContentCard({
             )}
 
             {/* Content */}
-            <div className="text-gray-700 leading-relaxed mb-4">
+            <div className={compact ? 'text-gray-700 leading-tight mb-2 text-sm' : 'text-gray-700 leading-relaxed mb-4'}>
               {children}
             </div>
 

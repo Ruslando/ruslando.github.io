@@ -1,5 +1,11 @@
 import './globals.css'
-import { Inter, Crimson_Text, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+})
 
 const inter = Inter({
   subsets: ['latin'],
@@ -7,17 +13,10 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const crimsonText = Crimson_Text({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '600', '700'],
-  variable: '--font-crimson',
-})
-
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-jetbrains-mono',
+  variable: '--font-mono',
 })
 
 export const metadata = {
@@ -46,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${crimsonText.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${jakarta.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

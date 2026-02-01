@@ -36,7 +36,7 @@ export default async function PublicationDetail({ params }: { params: Promise<{ 
         {/* Navigation */}
         <div className="mb-8">
           <Link 
-            href="/?tab=pubs" 
+            href="/" 
             className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-2"
           >
             ← Back to Publications
