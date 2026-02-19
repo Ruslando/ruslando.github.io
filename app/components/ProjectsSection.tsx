@@ -3,7 +3,7 @@
 import { useMemo, useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaGithub, FaExternalLinkAlt, FaFileAlt } from 'react-icons/fa'
 import { projectsData, type Project } from '../data/projects'
 import { SectionHeader } from './ui/SectionHeader'
 
@@ -193,6 +193,18 @@ export default function ProjectsSection() {
                         <span className="font-medium">GitHub</span>
                       </a>
                     )}
+                    {project.links?.pdf && (
+                      <a
+                        href={project.links.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-gray-600 hover:text-blue-600 transition-colors z-20"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaFileAlt className="w-3.5 h-3.5" />
+                        <span className="font-medium">PDF</span>
+                      </a>
+                    )}
                     {project.links?.showtime ? (
                       <a
                         href={project.links.showtime}
@@ -216,7 +228,7 @@ export default function ProjectsSection() {
                         <span className="font-medium">Website</span>
                       </a>
                     )}
-                    {!project.links?.github && !project.links?.showtime && !project.links?.website && (
+                    {!project.links?.pdf && !project.links?.github && !project.links?.showtime && !project.links?.website && (
                       <span>{project.year}</span>
                     )}
                   </div>

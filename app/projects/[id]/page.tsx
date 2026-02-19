@@ -421,7 +421,12 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
             {/* Links */}
             {Object.keys(project.links).length > 0 && (
               <div className="flex gap-4 flex-wrap">
-                {Object.entries(project.links).map(([type, url]) => (
+                {Object.entries(project.links)
+                  .sort(([a], [b]) => {
+                    const priority: Record<string, number> = { github: 0, pdf: 1 }
+                    return (priority[a] ?? 99) - (priority[b] ?? 99)
+                  })
+                  .map(([type, url]) => (
                   url && (
                     <a 
                       key={type}
