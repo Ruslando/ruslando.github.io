@@ -1,31 +1,10 @@
 'use client'
 
 import { useMemo, useRef, useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { FaGithub, FaExternalLinkAlt, FaFileAlt } from 'react-icons/fa'
 import { projectsData, type Project } from '../data/projects'
 import { SectionHeader } from './ui/SectionHeader'
-
-
-
-const categoryLabel: Record<Project['category'], string> = {
-  thesis: 'Thesis',
-  coursework: 'Coursework',
-  university: 'University',
-  hobby: 'Personal'
-}
-
-const detailPageMap: Record<string, string> = {
-  'masters-thesis': '/projects/masters-thesis',
-  'quake-path-tracing': '/projects/quake-path-tracing'
-}
-
-const getProjectHref = (project: Project) => {
-  if (detailPageMap[project.id]) return detailPageMap[project.id]
-  if (project.links?.github) return project.links.github
-  return undefined
-}
 
 export default function ProjectsSection() {
   const projectsSorted = useMemo(() => {
@@ -130,8 +109,6 @@ export default function ProjectsSection() {
           aria-label="Projects"
         >
           {projectsSorted.map(project => {
-            const href = getProjectHref(project)
-            const isInternal = href?.startsWith('/')
             const imageSrc = (project as Project & { image?: string }).image ?? '/bachelor_thesis/quake_bild.png'
 
             const Card = (
@@ -235,37 +212,6 @@ export default function ProjectsSection() {
                 </div>
               </article>
             )
-
-            /*
-            if (!href) {
-              return (
-                <div key={project.id} role="listitem">
-                  {Card}
-                </div>
-              )
-            }
-
-            if (isInternal) {
-              return (
-                <Link key={project.id} href={href} role="listitem" className="block">
-                  {Card}
-                </Link>
-              )
-            }
-
-            return (
-              <a
-                key={project.id}
-                href={href}
-                role="listitem"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                {Card}
-              </a>
-            )
-            */
 
              return (
                <div key={project.id} role="listitem">

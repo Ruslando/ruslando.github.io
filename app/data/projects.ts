@@ -139,7 +139,9 @@ export type Project = {
   category: 'thesis' | 'coursework' | 'hobby' | 'university'
   technologies: string[]
   languages: string[]
+  image?: string
   card_description: string
   summary: string
+  description?: string
   links: ProjectLinks
 }
